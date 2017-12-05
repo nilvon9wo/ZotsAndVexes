@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Nickname__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Nickname</label>
+        <length>40</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>StrategyName__c</fullName>
+        <externalId>false</externalId>
+        <label>Strategy Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UserId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>UserId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Players</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Player</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>ZVP-{YYYY}{MM}{DD}{0000}</displayFormat>
+        <label>Player Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Players</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Human</fullName>
+        <active>true</active>
+        <label>Human</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Robot</fullName>
+        <active>true</active>
+        <label>Robot</label>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Nickname__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>StrategyName__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>User__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Nickname__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>StrategyName__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>User__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>RECORDTYPE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Nickname__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>StrategyName__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>User__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>RECORDTYPE</searchFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Nickname__c</searchFilterFields>
+        <searchFilterFields>StrategyName__c</searchFilterFields>
+        <searchFilterFields>User__c</searchFilterFields>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Nickname__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>StrategyName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>User__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Human_Player_has_User</fullName>
+        <active>true</active>
+        <description>If player is human, User must have a lookup value.</description>
+        <errorConditionFormula>AND(
+  $RecordType.Name = &quot;Human&quot;,
+   ISBLANK( User__c)
+)</errorConditionFormula>
+        <errorDisplayField>User__c</errorDisplayField>
+        <errorMessage>If player is human, User must have a lookup value.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Human_should_Not_have_a_Strategy</fullName>
+        <active>true</active>
+        <description>Human players should not have a strategy.</description>
+        <errorConditionFormula>RecordType.DeveloperName == &apos;Human&apos;
+&amp;&amp; NOT(ISBLANK( StrategyName__c ))</errorConditionFormula>
+        <errorDisplayField>StrategyName__c</errorDisplayField>
+        <errorMessage>Human players should not have a strategy.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Robots_should_have_a_Strategy</fullName>
+        <active>true</active>
+        <description>Robots should have a Strategy</description>
+        <errorConditionFormula>RecordType.DeveloperName == &apos;Robot&apos;
+&amp;&amp; ISBLANK( StrategyName__c )</errorConditionFormula>
+        <errorDisplayField>StrategyName__c</errorDisplayField>
+        <errorMessage>Robots should have a Strategy</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Robots_should_not_have_users</fullName>
+        <active>true</active>
+        <description>Robot should not have a user.</description>
+        <errorConditionFormula>AND(
+  $RecordType.Name = &quot;Robot&quot;,
+  NOT(ISBLANK(User__c))
+)</errorConditionFormula>
+        <errorDisplayField>User__c</errorDisplayField>
+        <errorMessage>Robot should not have a user.</errorMessage>
+    </validationRules>
+</CustomObject>

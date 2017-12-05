@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Player</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Players</value>
+    </caseValues>
+    <fields>
+        <label><!-- Nickname --></label>
+        <name>Nickname__c</name>
+    </fields>
+    <fields>
+        <label><!-- Strategy Name --></label>
+        <name>StrategyName__c</name>
+    </fields>
+    <fields>
+        <label><!-- UserId --></label>
+        <name>UserId__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Players --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Human Player Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Robot Player Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Human --></label>
+        <name>Human</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Robot --></label>
+        <name>Robot</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- If player is human, User must have a lookup value. --></errorMessage>
+        <name>Human_Player_has_User</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Human players should not have a strategy. --></errorMessage>
+        <name>Human_should_Not_have_a_Strategy</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Robots should have a Strategy --></errorMessage>
+        <name>Robots_should_have_a_Strategy</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Robot should not have a user. --></errorMessage>
+        <name>Robots_should_not_have_users</name>
+    </validationRules>
+</CustomObjectTranslation>
