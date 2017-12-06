@@ -65,6 +65,32 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
+    <fields>
+        <fullName>Height__c</fullName>
+        <defaultValue>3</defaultValue>
+        <externalId>false</externalId>
+        <label>Height</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Width__c</fullName>
+        <defaultValue>3</defaultValue>
+        <externalId>false</externalId>
+        <label>Width</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>Board</label>
     <listViews>
         <fullName>All</fullName>

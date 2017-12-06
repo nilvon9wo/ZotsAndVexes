@@ -17,7 +17,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>StrategyName__c</field>
+                <field>StrategyClassName__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

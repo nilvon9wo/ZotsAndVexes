@@ -64,9 +64,9 @@
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>StrategyName__c</fullName>
+        <fullName>StrategyClassName__c</fullName>
         <externalId>false</externalId>
-        <label>Strategy Name</label>
+        <label>Strategy Class Name</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -125,24 +125,24 @@
     <searchLayouts>
         <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
         <customTabListAdditionalFields>Nickname__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>StrategyName__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>StrategyClassName__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>User__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Nickname__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>StrategyName__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>StrategyClassName__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>User__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>RECORDTYPE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Nickname__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>StrategyName__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>StrategyClassName__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>User__c</lookupPhoneDialogsAdditionalFields>
         <searchFilterFields>RECORDTYPE</searchFilterFields>
         <searchFilterFields>NAME</searchFilterFields>
         <searchFilterFields>Nickname__c</searchFilterFields>
-        <searchFilterFields>StrategyName__c</searchFilterFields>
+        <searchFilterFields>StrategyClassName__c</searchFilterFields>
         <searchFilterFields>User__c</searchFilterFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Nickname__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>StrategyName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>StrategyClassName__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>User__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
@@ -162,8 +162,8 @@
         <active>true</active>
         <description>Human players should not have a strategy.</description>
         <errorConditionFormula>RecordType.DeveloperName == &apos;Human&apos;
-&amp;&amp; NOT(ISBLANK( StrategyName__c ))</errorConditionFormula>
-        <errorDisplayField>StrategyName__c</errorDisplayField>
+&amp;&amp; NOT(ISBLANK( StrategyClassName__c ))</errorConditionFormula>
+        <errorDisplayField>StrategyClassName__c</errorDisplayField>
         <errorMessage>Human players should not have a strategy.</errorMessage>
     </validationRules>
     <validationRules>
@@ -171,8 +171,8 @@
         <active>true</active>
         <description>Robots should have a Strategy</description>
         <errorConditionFormula>RecordType.DeveloperName == &apos;Robot&apos;
-&amp;&amp; ISBLANK( StrategyName__c )</errorConditionFormula>
-        <errorDisplayField>StrategyName__c</errorDisplayField>
+&amp;&amp; ISBLANK( StrategyClassName__c )</errorConditionFormula>
+        <errorDisplayField>StrategyClassName__c</errorDisplayField>
         <errorMessage>Robots should have a Strategy</errorMessage>
     </validationRules>
     <validationRules>

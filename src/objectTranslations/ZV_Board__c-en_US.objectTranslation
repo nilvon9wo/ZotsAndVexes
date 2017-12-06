@@ -13,5 +13,20 @@
         <name>Game__c</name>
         <relationshipLabel><!-- Boards --></relationshipLabel>
     </fields>
+    <fields>
+        <label><!-- Height --></label>
+        <name>Height__c</name>
+    </fields>
+    <fields>
+        <label><!-- Width --></label>
+        <name>Width__c</name>
+    </fields>
+    <layouts>
+        <layout>Board Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

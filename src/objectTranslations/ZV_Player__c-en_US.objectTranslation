@@ -13,8 +13,8 @@
         <name>Nickname__c</name>
     </fields>
     <fields>
-        <label><!-- Strategy Name --></label>
-        <name>StrategyName__c</name>
+        <label><!-- Strategy Class Name --></label>
+        <name>StrategyClassName__c</name>
     </fields>
     <fields>
         <label><!-- UserId --></label>
