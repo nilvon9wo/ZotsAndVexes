@@ -1,0 +1,11 @@
+<aura:component>
+	<aura:attribute access="public" name="cellRowList" type="List"/>
+
+	<aura:iteration items="{!v.cellRowList}" var="cellRow" >
+		<tr>	
+			<aura:iteration items="{!cellRow}" var="cell" >
+				<td>{!cell.Id}</td>
+			</aura:iteration>
+		</tr>
+	</aura:iteration>
+</aura:component>

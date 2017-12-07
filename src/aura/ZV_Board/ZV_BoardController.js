@@ -1,6 +1,6 @@
 ({
 	doInit : function(component, event, helper) {
 		helper.loadBoardWithCells(component)	
-			.then(helper.displayCells(component));
+			.then($A.getCallback(helper.displayCells(component)));
 	}
 })

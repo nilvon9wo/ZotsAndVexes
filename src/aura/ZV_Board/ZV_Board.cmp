@@ -5,18 +5,10 @@
 	">
 
 	<aura:attribute access="public" name="recordId" type="Id" />
-	<aura:attribute access="private" name="board" type="ZV_Board__c" />
-	<aura:attribute access="private" name="cellRowList" type="List" />
-	
+
 	<ltng:require scripts="{!$Resource.AURA_LightningComponentHelper_JS}"
 		afterScriptsLoaded="{!c.doInit}" 
 	/>
 
-	<aura:iteration items="{!v.cellRowList}" var="cellRow" >
-		<tr>	
-			<aura:iteration items="{!cellRow}" var="cell" >
-				<td>{!cell}</td>
-			</aura:iteration>
-		</tr>
-	</aura:iteration>
+	<div aura:id="cell-container"></div>
 </aura:component>

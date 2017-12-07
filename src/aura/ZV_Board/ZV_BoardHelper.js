@@ -6,19 +6,28 @@
 	},
 	
 	displayCells : function(component) {
-		return function(board) {
-			component.set('v.board', board)
-			
-			var cellRowList = [];
-			for (var index in board.Cells__r) {
-				var cell = board.Cells__r[index];
-				var row = cell.Y__c - 1;
-				if (!cellRowList[row]) {
-					cellRowList[row] = [];
-				}
-				cellRowList[row].push(cell);
+		var self = this;
+		return $A.getCallback(function(board) {
+			var params = {
+				cellRowList: self.buildCellMatrix(board)
 			}
-			component.set('v.cellRowList', board);
-		}
+			$A.createComponent('c:ZV_CellContainer', params, function(innerComponent){
+				component.find('cell-container')
+					.set('v.body', innerComponent);
+				console.log('##### innerComponent', innerComponent);
+			})
+		});
+	},
+	
+	buildCellMatrix: function(board) {
+		var cellRowList =  [];
+		board.Cells__r.forEach(function(cell){
+			var row = cell.Y__c - 1;
+			if (!cellRowList[row]) {
+				cellRowList[row] = [];
+			}
+			cellRowList[row].push(cell);
+		});
+		return cellRowList;
 	}
 })
