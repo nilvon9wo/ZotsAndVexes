@@ -1,0 +1,20 @@
+<aura:component controller="ZV_BoardAuraCtrl" implements="
+		flexipage:availableForRecordHome, 
+		force:appHostable, 
+		force:hasRecordId
+	">
+
+	<aura:attribute access="public" name="recordId" type="Id" />
+	<aura:attribute access="private" name="board" type="ZV_Board__c" />
+	<aura:attribute access="private" name="cellRowList" type="List" />
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<aura:iteration items="{!v.cellRowList}" var="cellRow" >
+		<tr>	
+			<aura:iteration items="{!cellRow}" var="cell" >
+				<td>{!cell}</td>
+			</aura:iteration>
+		</tr>
+	</aura:iteration>
+</aura:component>
