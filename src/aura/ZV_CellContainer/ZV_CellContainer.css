@@ -1,2 +1,6 @@
-.THIS {
+.THIS td{
+	background-color: white;
+	border: 5px solid black;
+	height: 150px;
+	width: 150px;
 }

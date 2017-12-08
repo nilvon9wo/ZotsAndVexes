@@ -1,0 +1,10 @@
+<aura:component> 
+	<aura:attribute access="public" name="cell" type="ZV_Cell__c"/>
+	<aura:if isTrue="{!v.cell.Occupant__c}">
+		<c:ZV_CellOccupant gamePlayerId="{!v.cell.Occupant__c}" />
+		
+		<aura:set attribute="else">
+			[EMPTY]
+		</aura:set>
+	</aura:if>
+</aura:component>

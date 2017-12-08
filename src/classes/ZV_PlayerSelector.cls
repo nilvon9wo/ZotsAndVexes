@@ -1,7 +1,9 @@
-public with sharing class ZV_PlayerSelector extends fflib_SObjectSelector {
+public with sharing class ZV_PlayerSelector extends fflib_SObjectSelector { 
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			ZV_Player__c.Id,
+			ZV_Player__c.IconName__c,
+			ZV_Player__c.IconVariant__c,
 			ZV_Player__c.StrategyClassName__c,
 			ZV_Player__c.User__c 
 		};

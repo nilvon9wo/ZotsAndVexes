@@ -1,0 +1,11 @@
+<aura:component>
+	<aura:attribute access="public" name="gamePlayerId" type="Id"/>
+	[{!v.gamePlayerId}]
+	<lightning:icon 
+		iconName="utility:expand"
+		alternativeText="X"
+		title="X" 
+		size="large"
+		variant="error"
+	/>
+</aura:component>

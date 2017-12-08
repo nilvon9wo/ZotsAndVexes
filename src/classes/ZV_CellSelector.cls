@@ -1,6 +1,4 @@
 public with sharing class ZV_CellSelector extends fflib_SObjectSelector {
-	ZV_CellSelector cellSelector;
-	
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			ZV_Cell__c.Id,

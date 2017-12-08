@@ -9,13 +9,13 @@
 		var self = this;
 		return $A.getCallback(function(board) {
 			var params = {
+				gameId: board.Game__c,
 				cellRowList: self.buildCellMatrix(board)
-			}
+			};
 			$A.createComponent('c:ZV_CellContainer', params, function(innerComponent){
 				component.find('cell-container')
 					.set('v.body', innerComponent);
-				console.log('##### innerComponent', innerComponent);
-			})
+			});
 		});
 	},
 	

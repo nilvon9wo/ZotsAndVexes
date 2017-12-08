@@ -16,5 +16,5 @@ public class ZV_BoardAuraCtrl {
     
     public ZV_Board__c selectWithCells (Id boardId) {
     	return this.boardSelector.selectWithCells(new Set<Id>{boardId})[0];
-    } 
+    }
 }

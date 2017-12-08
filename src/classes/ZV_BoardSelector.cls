@@ -12,6 +12,7 @@ public with sharing class ZV_BoardSelector extends fflib_SObjectSelector {
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			ZV_Board__c.Id,
+			ZV_Board__c.Game__c,
 			ZV_Board__c.Height__c,
 			ZV_Board__c.Width__c 
 		};
@@ -27,7 +28,8 @@ public with sharing class ZV_BoardSelector extends fflib_SObjectSelector {
 
 	public List<ZV_Board__c> selectWithCells(Set<Id> idSet) {
 		fflib_QueryFactory boardQueryFactory = newQueryFactory();
-		fflib_QueryFactory cellQueryFactory = this.cellSelector.addQueryFactorySubselect(boardQueryFactory, 'Cells__r');
+		this.cellSelector.addQueryFactorySubselect(boardQueryFactory, 'Cells__r');
+		
 		return (List<ZV_Board__c>) Database.query(
 			boardQueryFactory
 				.setCondition('id in :idSet')

@@ -14,5 +14,5 @@
 		This is a workaround because of an issue rerendering iterable child components
 		See: https://salesforce.stackexchange.com/questions/108925/lightning-rerender-child-components-in-auraiterable-after-parent-attribute-ch
 	 -->	
-	<div aura:id="cell-container"></div>
+ 	<div aura:id="cell-container"></div>
 </aura:component>

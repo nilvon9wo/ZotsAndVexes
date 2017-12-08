@@ -1,10 +1,15 @@
-<aura:component>
+<aura:component controller="ZV_CellContainerAuraCtrl"> 
 	<aura:attribute access="public" name="cellRowList" type="List"/>
+	<aura:attribute access="public" name="gameId" type="Id"/>
 
+	<ltng:require scripts="{!$Resource.AURA_LightningComponentHelper_JS}"
+		afterScriptsLoaded="{!c.doInit}" 
+	/>
+	
 	<aura:iteration items="{!v.cellRowList}" var="cellRow" >
 		<tr>	
 			<aura:iteration items="{!cellRow}" var="cell" >
-				<td>{!cell.Id}</td>
+				<td><c:ZV_Cell cell="{!cell}"/></td>
 			</aura:iteration>
 		</tr>
 	</aura:iteration>
