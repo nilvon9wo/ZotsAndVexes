@@ -1,2 +1,5 @@
 .THIS {
+	height: 100%;
+	display: grid;
+	margin: auto;
 }

@@ -1,10 +1,19 @@
-<aura:component> 
+<aura:component controller="ZV_CellAuraCtrl"> 
 	<aura:attribute access="public" name="cell" type="ZV_Cell__c"/>
-	<aura:if isTrue="{!v.cell.Occupant__c}">
-		<c:ZV_CellOccupant gamePlayerId="{!v.cell.Occupant__c}" />
-		
-		<aura:set attribute="else">
-			[EMPTY]
-		</aura:set>
-	</aura:if>
+	<aura:attribute access="public" name="boardId" type="Id"/>
+	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
+
+	<ltng:require scripts="$Resource.AURA_LightningComponentHelper_JS" />
+
+	<lightning:layout horizontalAlign="space" verticalAlign="center" multipleRows="true">
+		<div class="slds-align_absolute-center">
+			<aura:if isTrue="{!v.cell.Occupant__c}">
+				<c:ZV_CellOccupant gamePlayerId="{!v.cell.Occupant__c}" gamePlayerByIdMap="{!v.gamePlayerByIdMap}" />
+				
+				<aura:set attribute="else">
+					<lightning:button label="Occupy" onclick="{! c.occupy }" />
+				</aura:set>
+			</aura:if>
+		</div>
+	</lightning:layout>	
 </aura:component>

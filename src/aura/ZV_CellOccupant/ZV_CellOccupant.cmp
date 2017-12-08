@@ -1,11 +1,17 @@
 <aura:component>
 	<aura:attribute access="public" name="gamePlayerId" type="Id"/>
-	[{!v.gamePlayerId}]
+	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
+	
+	<aura:attribute access="private" name="simpleMarker" type="String" />
+	<aura:attribute access="private" name="player" type="ZV_Player__c" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
 	<lightning:icon 
-		iconName="utility:expand"
-		alternativeText="X"
-		title="X" 
+		iconName="{!v.player.IconName__c}"
+		alternativeText="{!v.simpleMarker}"
+		title="{!v.simpleMarker}"
 		size="large"
-		variant="error"
+		variant="{!v.player.IconVariant__c}"
 	/>
-</aura:component>
+</aura:component> 

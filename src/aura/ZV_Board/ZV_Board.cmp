@@ -5,11 +5,17 @@
 	">
 
 	<aura:attribute access="public" name="recordId" type="Id" />
+	<aura:attribute access="private" name="board" type="ZV_Board__c" />
 
-	<ltng:require scripts="{!$Resource.AURA_LightningComponentHelper_JS}"
+	<ltng:require scripts="{!join(',',  
+								$Resource.AURA_LightningComponentHelper_JS,
+								$Resource.ZV_PlayerMarkerHelper_JS
+							)}"
 		afterScriptsLoaded="{!c.doInit}" 
 	/>
 
+	<aura:handler name="change" value="{!v.board}" action="{!c.loadGamePlayers}"/>
+	
 	<!--  
 		This is a workaround because of an issue rerendering iterable child components
 		See: https://salesforce.stackexchange.com/questions/108925/lightning-rerender-child-components-in-auraiterable-after-parent-attribute-ch

@@ -24,6 +24,10 @@ public with sharing class ZV_GamePlayerSelector extends fflib_SObjectSelector {
 		return ZV_GamePlayer__c.sObjectType;
 	} 
 
+	public override String getOrderBy() {
+		return 'PlayOrder__c ASC';
+	}
+
 	public List<ZV_GamePlayer__c> selectById(Set<Id> idSet) {
 		return (List<ZV_GamePlayer__c>) selectSObjectsById(idSet);
 	}
