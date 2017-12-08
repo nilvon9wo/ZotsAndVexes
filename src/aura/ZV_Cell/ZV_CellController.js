@@ -1,5 +1,5 @@
 ({
-	occupyCell : function(component, event, helper) {
+	occupy : function(component, event, helper) {
 		helper.occupy(component)
 	}
 })
