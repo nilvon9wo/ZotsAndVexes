@@ -1,4 +1,14 @@
-public with sharing class ZV_PlayerSelector extends fflib_SObjectSelector { 
+public class ZV_PlayerSelector extends fflib_SObjectSelector {
+	ZV_SetHelper setHelper;
+	
+	public ZV_PlayerSelector(ZV_SetHelper setHelper){
+		this.setHelper = setHelper;
+	}
+
+	public ZV_PlayerSelector(){
+		this(new ZV_SetHelper());
+	}
+	 
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			ZV_Player__c.Id, 
@@ -22,6 +32,12 @@ public with sharing class ZV_PlayerSelector extends fflib_SObjectSelector {
 			newQueryFactory()
 				.setCondition('User__c IN :humanPlayerUserIdSet OR StrategyClassName__c IN :robotStrategySet')
 				.toSOQL()		
+		);
+	}
+	
+	public List<ZV_Player__c> selectFor(List<ZV_GamePlayer__c> gamePlayerList) {
+		return this.selectById(
+			this.setHelper.createIdSet(gamePlayerList, ZV_GamePlayer__c.Player__c)
 		);
 	}
 }

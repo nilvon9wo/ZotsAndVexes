@@ -1,7 +1,7 @@
 ({
 	occupy : function(component) {
 		return $LCH.ServerApexPromise(component, 'occupyCell', {
-			boardId: component.get('v.cell.Id')
+			cellId: component.get('v.cell.Id')
 		});
 	}
 })
