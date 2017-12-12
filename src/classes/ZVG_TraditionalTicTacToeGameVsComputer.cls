@@ -39,5 +39,11 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
     
 	public Boolean canOccupyCell(ZV_GameCellContext gameCellContext) {
 		return gameCellContext.cell.Occupant__c == null;
+	}
+	
+	
+	public List<ZV_Cell__c> occupyCells(ZV_GameCellContext gameCellContext) {
+		gameCellContext.cell.Occupant__c = gameCellContext.gamePlayerByUserIdMap.get(gameCellContext.userId).Id;
+		return new List<ZV_Cell__c>{gameCellContext.cell};
 	}    
 }

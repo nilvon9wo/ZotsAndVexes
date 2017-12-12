@@ -1,14 +1,28 @@
 public class ZV_CellAuraCtrl {
-	ZV_CellOccupyValidator cellOccupyValidator;
+	F45_DML_GenericDml genericDml;
+	ZV_CellService cellService;
+	ZV_GameService gameService;
 	ZV_RecordTypeCache recordTypeCache;   
 	
-	public ZV_CellAuraCtrl(ZV_CellOccupyValidator cellOccupyValidator, ZV_RecordTypeCache recordTypeCache) {
-		this.cellOccupyValidator = cellOccupyValidator;
+	public ZV_CellAuraCtrl(
+			F45_DML_GenericDml genericDml, 
+			ZV_CellService cellService, 
+			ZV_GameService gameService, 
+			ZV_RecordTypeCache recordTypeCache
+		) {
+		this.genericDml = genericDml;
+		this.cellService = cellService;
+		this.gameService = gameService;
 		this.recordTypeCache = recordTypeCache;
 	}		
 
 	public ZV_CellAuraCtrl() {
-		this(new ZV_CellOccupyValidator(), new ZV_RecordTypeCache());
+		this(
+			new F45_DML_GenericDml(), 
+			new ZV_CellService(), 
+			new ZV_GameService(), 
+			new ZV_RecordTypeCache()
+		);
 	}		
 
     @AuraEnabled
@@ -19,25 +33,20 @@ public class ZV_CellAuraCtrl {
     public ZV_CellOccupyResult occupy(Id cellId) {
     	this.recordTypeCache.registerRequired(new Set<SObjectType>{ZV_Game__c.SObjectType});
     	 
-    	ZV_GameCellContext gameCellContext = new ZV_GameCellContext(cellId);    
-    	Boolean isValid = this.cellOccupyValidator.validate(gameCellContext); 
+    	ZV_GameCellContext gameCellContext = new ZV_GameCellContext(cellId);
+    	List<ZV_Cell__c> updatedCellList = this.cellService.occupyCells(gameCellContext); 
+		    	
+
     	
-    	// TODO: Verify user is in game
-    	// TODO: Verify user is next player
-    	// TODO: Verify player can occupy cell
-    	// TODO: Update Cell
-    	// TODO: Update next player
+    	// TODO: Update next player 
     	// TODO: While next player is robot do
     	// TODO: -- Calculate robot's move(s)
     	// TODO: -- Update cell(s)
     	// TODO: -- Update next player 
     	
-    	List<ZV_Cell__c> updatedCellList = new List<ZV_Cell__c>();
     	// TODO
-    	  
-    	ZV_CellOccupyResult result = new ZV_CellOccupyResult(updatedCellList);
-    	// TODO
-    	
-    	return result;
+
+		this.genericDml.doUpsert(updatedCellList);    	  
+    	return new ZV_CellOccupyResult(updatedCellList);
     }
 }
