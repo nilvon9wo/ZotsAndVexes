@@ -1,0 +1,3 @@
+public enum ZVG_GamesEnum {
+	TRADITIONAL_TIC_TAC_TOE_AGAINST_COMPUTER
+}

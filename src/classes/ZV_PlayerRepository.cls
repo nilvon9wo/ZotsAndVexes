@@ -12,7 +12,7 @@ public with sharing class ZV_PlayerRepository {
  			ZV_SetHelper setHelper, 
  			ZV_UserSelector userSelector
  		) {
- 		this.mapHelper = mapHelper;
+ 		this.mapHelper = mapHelper; 
  		this.playerSelector = playerSelector;
  		this.randomizer = randomizer;
  		this.setHelper = setHelper; 
@@ -78,11 +78,9 @@ public with sharing class ZV_PlayerRepository {
     }
 
     public Id getRobotPlayerId (ZV_Game__c game) {
-    	System.debug('######### PLAYER_LIST: ' + PLAYER_LIST);
     	if (ROBOT_PLAYER_BY_STRATEGY_SET_MAP == null) {
     		ROBOT_PLAYER_BY_STRATEGY_SET_MAP = this.mapHelper.buidMappedSetBySpecifiedString(PLAYER_LIST, ZV_Player__c.StrategyClassName__c); 
     	}
-    	System.debug('######### ROBOT_PLAYER_BY_STRATEGY_SET_MAP: ' + ROBOT_PLAYER_BY_STRATEGY_SET_MAP);
     	return this.randomizer.getRandomMember(ROBOT_PLAYER_BY_STRATEGY_SET_MAP.get(DEFAULT_ROBOT_STRATEGY)).id;
     }
 }

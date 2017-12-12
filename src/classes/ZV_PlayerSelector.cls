@@ -14,6 +14,7 @@ public class ZV_PlayerSelector extends fflib_SObjectSelector {
 			ZV_Player__c.Id, 
 			ZV_Player__c.IconName__c,
 			ZV_Player__c.IconVariant__c,
+			ZV_Player__c.Nickname__c,
 			ZV_Player__c.StrategyClassName__c,
 			ZV_Player__c.User__c 
 		};

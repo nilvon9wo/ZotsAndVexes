@@ -1,44 +1,23 @@
 public class ZV_CellAuraCtrl {
-	ZV_BoardSelector boardSelector;
-	ZV_CellSelector cellSelector;
 	ZV_CellOccupyValidator cellOccupyValidator;
-	ZV_GameSelector gameSelector;
-	ZV_GamePlayerSelector gamePlayerSelector;
-	ZV_PlayerSelector playerSelector;
+	ZV_RecordTypeCache recordTypeCache;   
 	
-	public ZV_CellAuraCtrl(
-			ZV_BoardSelector boardSelector,
-			ZV_CellSelector cellSelector,
-			ZV_CellOccupyValidator cellOccupyValidator,
-			ZV_GameSelector gameSelector,
-			ZV_GamePlayerSelector gamePlayerSelector,
-			ZV_PlayerSelector playerSelector
-		) {
-		this.boardSelector = boardSelector;
-		this.cellSelector = cellSelector;
+	public ZV_CellAuraCtrl(ZV_CellOccupyValidator cellOccupyValidator, ZV_RecordTypeCache recordTypeCache) {
 		this.cellOccupyValidator = cellOccupyValidator;
-		this.gameSelector = gameSelector;
-		this.gamePlayerSelector = gamePlayerSelector;
-		this.playerSelector = playerSelector;
+		this.recordTypeCache = recordTypeCache;
 	}		
 
 	public ZV_CellAuraCtrl() {
-		this(
-			new ZV_BoardSelector(), 
-			new ZV_CellSelector(), 
-			new ZV_CellOccupyValidator(), 
-			new ZV_GameSelector(), 
-			new ZV_GamePlayerSelector(), 
-			new ZV_PlayerSelector()
-		);
+		this(new ZV_CellOccupyValidator(), new ZV_RecordTypeCache());
 	}		
 
     @AuraEnabled
     public static ZV_CellOccupyResult occupyCell(Id cellId) {
     	return (new ZV_CellAuraCtrl()).occupy(cellId);
     }
-    	  
+    	   
     public ZV_CellOccupyResult occupy(Id cellId) {
+    	this.recordTypeCache.registerRequired(new Set<SObjectType>{ZV_Game__c.SObjectType});
     	 
     	ZV_GameCellContext gameCellContext = new ZV_GameCellContext(cellId);    
     	Boolean isValid = this.cellOccupyValidator.validate(gameCellContext); 

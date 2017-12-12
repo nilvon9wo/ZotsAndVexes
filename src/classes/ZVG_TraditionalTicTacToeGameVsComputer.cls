@@ -1,13 +1,13 @@
-public class ZV_TraditionalTicTacToeGameVsComputer implements ZV_GameIntf {
+public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
 	ZV_PlayerService playerService;  
 	ZV_Randomizer randomizer;
 	
-	public ZV_TraditionalTicTacToeGameVsComputer(ZV_PlayerService playerService, ZV_Randomizer randomizer) {
+	public ZVG_TraditionalTicTacToeGameVsComputer(ZV_PlayerService playerService, ZV_Randomizer randomizer) {
 		this.playerService = playerService;
 		this.randomizer = randomizer;
 	}
 
-	public ZV_TraditionalTicTacToeGameVsComputer() {
+	public ZVG_TraditionalTicTacToeGameVsComputer() {
 		this(new ZV_PlayerService(), new ZV_Randomizer());
 	}
 
@@ -37,5 +37,7 @@ public class ZV_TraditionalTicTacToeGameVsComputer implements ZV_GameIntf {
     	return gamePlayerList; 
     }
     
-    
+	public Boolean canOccupyCell(ZV_GameCellContext gameCellContext) {
+		return gameCellContext.cell.Occupant__c == null;
+	}    
 }

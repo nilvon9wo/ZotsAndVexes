@@ -3,7 +3,9 @@ public class ZV_GameCellContext {
 	ZV_CellSelector cellSelector;
 	ZV_GameSelector gameSelector;
 	ZV_GamePlayerSelector gamePlayerSelector;
+	ZV_MapHelper mapHelper;
 	ZV_PlayerSelector playerSelector;
+	ZV_SetHelper setHelper;
 	ZV_UserInfoWrapper userInfoWrapper;
 
 	public ZV_GameCellContext(
@@ -12,7 +14,9 @@ public class ZV_GameCellContext {
 			ZV_CellSelector cellSelector,
 			ZV_GameSelector gameSelector,
 			ZV_GamePlayerSelector gamePlayerSelector,
+			ZV_MapHelper mapHelper,
 			ZV_PlayerSelector playerSelector,
+			ZV_SetHelper setHelper,
 			ZV_UserInfoWrapper userInfoWrapper
 		) {
 		this.cellId = cellId;
@@ -20,7 +24,9 @@ public class ZV_GameCellContext {
 		this.cellSelector = cellSelector;
 		this.gameSelector = gameSelector;
 		this.gamePlayerSelector = gamePlayerSelector;
+		this.mapHelper = mapHelper;
 		this.playerSelector = playerSelector;
+		this.setHelper = setHelper;
 		this.userInfoWrapper = userInfoWrapper;
 	}		
 
@@ -31,7 +37,9 @@ public class ZV_GameCellContext {
 			new ZV_CellSelector(), 
 			new ZV_GameSelector(), 
 			new ZV_GamePlayerSelector(), 
+			new ZV_MapHelper(),
 			new ZV_PlayerSelector(),
+			new ZV_SetHelper(),
 			new ZV_UserInfoWrapper()
 		);
 	}	
@@ -87,7 +95,7 @@ public class ZV_GameCellContext {
 		} 
 		private set;
 	} 
-
+	
     @testVisible public List<ZV_GamePlayer__c> gamePlayerList {
 		get {
 			if (this.gamePlayerList == null) {
@@ -96,6 +104,52 @@ public class ZV_GameCellContext {
 			return this.gamePlayerList;
 		} 
 		private set;
+	}
+	
+    @testVisible public Map<Id, ZV_GamePlayer__c> gamePlayerByIdMap {
+		get {
+			if (this.gamePlayerByIdMap == null) {
+				this.gamePlayerByIdMap = new Map<Id, ZV_GamePlayer__c>(this.gamePlayerList);
+			}
+			return this.gamePlayerByIdMap;
+		} 
+		private set;
+	}
+	
+    @testVisible public Map<Id, ZV_GamePlayer__c> gamePlayerByPlayerIdMap {
+		get {
+			if (this.gamePlayerByPlayerIdMap == null) {
+				this.gamePlayerByPlayerIdMap 
+					= (Map<Id, ZV_GamePlayer__c>) this.mapHelper.buidMapBySpecifiedId(this.gamePlayerList, ZV_GamePlayer__c.Player__c);
+			}
+			return this.gamePlayerByPlayerIdMap;
+		} 
+		private set;
+	}
+	
+    @testVisible public Map<Id, ZV_GamePlayer__c> gamePlayerByUserIdMap {
+		get {
+			if (this.gamePlayerByUserIdMap == null) {
+				gamePlayerByUserIdMap = new Map<Id, ZV_GamePlayer__c>();
+				for (ZV_GamePlayer__c gamePlayer : this.gamePlayerList) {
+					Id userId = this.playerByIdMap.get(gamePlayer.Player__c).User__c;
+					this.gamePlayerByUserIdMap.put(userId, gamePlayer);
+				}
+			}
+			return this.gamePlayerByUserIdMap;
+		} 
+		private set;
+	}
+	
+	@testVisible public Id nextGamePlayerId {
+		get {
+			this.nextGamePlayerId = this.game.NextPlayer__c;
+			if (this.nextGamePlayerId == null) {
+				this.nextGamePlayerId = this.gamePlayerList[0].Id;
+			}
+			return this.nextGamePlayerId;
+		}
+		private set;		
 	}
 
     @testVisible public List<ZV_Player__c> playerList {
@@ -107,7 +161,38 @@ public class ZV_GameCellContext {
 		} 
 		private set;
 	}
+
+    @testVisible public Map<Id, ZV_Player__c> playerByIdMap {
+		get {
+			if (this.playerByIdMap == null) {
+				this.playerByIdMap = new Map<Id, ZV_Player__c>(this.playerByIdMap);
+			}
+			return this.playerByIdMap;
+		} 
+		private set;
+	}
+
+    @testVisible public Map<Id, ZV_Player__c> playerByUserIdMap {
+		get {
+			if (this.playerByUserIdMap == null) {
+				this.playerByUserIdMap 
+					= (Map<Id, ZV_Player__c>) this.mapHelper.buidMapBySpecifiedId(this.playerList, ZV_Player__c.User__c);
+			}
+			return this.playerByUserIdMap;
+		} 
+		private set;
+	}
 	
+	@testVisible public Set<Id> playerUserIdSet {
+		get {
+			if (this.playerUserIdSet == null) {
+				this.playerUserIdSet = this.setHelper.createIdSet(this.playerList, ZV_Player__c.User__c);
+			}
+			return this.playerUserIdSet;
+		} 
+		private set;
+	} 
+
 	@testVisible public Id userId {
 		get {
 			if (this.userId == null) {
@@ -117,4 +202,24 @@ public class ZV_GameCellContext {
 		} 
 		private set;
 	} 
+
+	@testVisible public String userName {   
+		get {
+			if (this.userName == null) {
+				this.userName = this.userInfoWrapper.userName;
+			}
+			return this.userName; 
+		} 
+		private set;
+	}
+
+	@testVisible public String userNickName {   
+		get {
+			if (this.userNickName == null) {
+				this.userNickName = this.playerByUserIdMap.get(this.userId).NickName__c;
+			}
+			return this.userNickName; 
+		} 
+		private set;
+	}
 }
