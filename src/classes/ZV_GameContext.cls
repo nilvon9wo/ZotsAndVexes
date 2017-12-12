@@ -1,4 +1,4 @@
-public class ZV_GameCellContext {
+public class ZV_GameContext {
 	ZV_BoardSelector boardSelector;
 	ZV_CellSelector cellSelector;
 	ZV_GameSelector gameSelector;
@@ -8,7 +8,7 @@ public class ZV_GameCellContext {
 	ZV_SetHelper setHelper;
 	ZV_UserInfoWrapper userInfoWrapper;
 
-	public ZV_GameCellContext(
+	public ZV_GameContext(
 			Id cellId,
 			ZV_BoardSelector boardSelector,
 			ZV_CellSelector cellSelector,
@@ -21,7 +21,7 @@ public class ZV_GameCellContext {
 		) {
 		this.cellId = cellId;
 		this.boardSelector = boardSelector;
-		this.cellSelector = cellSelector;
+		this.cellSelector = cellSelector; 
 		this.gameSelector = gameSelector;
 		this.gamePlayerSelector = gamePlayerSelector;
 		this.mapHelper = mapHelper;
@@ -30,7 +30,7 @@ public class ZV_GameCellContext {
 		this.userInfoWrapper = userInfoWrapper;
 	}		
 
-	public ZV_GameCellContext(Id cellId) {
+	public ZV_GameContext(Id cellId) {
 		this(
 			cellId,
 			new ZV_BoardSelector(), 
@@ -47,7 +47,7 @@ public class ZV_GameCellContext {
     @testVisible public ZV_Board__c board {
 		get {
 			if (this.board == null) {
-				this.board = this.boardSelector.selectById(new Set<Id>{this.boardId})[0];
+				this.board = this.boardSelector.selectWithCells(new Set<Id>{this.boardId})[0];
 			}
 			return this.board;
 		} 
@@ -72,10 +72,32 @@ public class ZV_GameCellContext {
 			return this.cell;
 		} 
 		private set;
-	} 
+	}
 
     @testVisible public Id cellId {get; private set;}
-	
+
+    @testVisible public Map<ZV_CellCoordinate, ZV_Cell__c> cellByCellCoordinateMap {
+		get {
+			if (this.cellByCellCoordinateMap == null) {
+				this.cellByCellCoordinateMap = new Map<ZV_CellCoordinate, ZV_Cell__c>();
+				for (ZV_Cell__c cell : this.board.Cells__r) {
+					cellByCellCoordinateMap.put(new ZV_CellCoordinate((Integer) cell.X__c, (Integer) cell.Y__c), cell);
+				}
+			}
+			return this.cellByCellCoordinateMap;
+		} 
+		private set;
+	}
+    
+    public ZV_GamePlayer__c currentGamePlayer;
+    
+	@testVisible public ZV_Player__c currentPlayer {
+		get {
+			return this.currentGamePlayer.Player__r;
+		}
+		private set;		
+	}    
+    
     @testVisible public ZV_Game__c game {
 		get {
 			if (this.game == null) {
@@ -115,6 +137,17 @@ public class ZV_GameCellContext {
 		} 
 		private set;
 	}
+
+    @testVisible public Map<Decimal, ZV_GamePlayer__c> gamePlayerByOrderMap { 
+		get {
+			if (this.gamePlayerByOrderMap == null) { 
+				this.gamePlayerByOrderMap 
+					= (Map<Decimal, ZV_GamePlayer__c>) this.mapHelper.buidMapBySpecifiedDecimal(this.gamePlayerList, ZV_GamePlayer__c.PlayOrder__c);
+			}
+			return this.gamePlayerByOrderMap;
+		} 
+		private set;
+	}
 	
     @testVisible public Map<Id, ZV_GamePlayer__c> gamePlayerByPlayerIdMap {
 		get {
@@ -139,7 +172,7 @@ public class ZV_GameCellContext {
 			return this.gamePlayerByUserIdMap;
 		} 
 		private set;
-	}
+	} 
 	
 	@testVisible public Id nextGamePlayerId {
 		get {
@@ -148,6 +181,20 @@ public class ZV_GameCellContext {
 				this.nextGamePlayerId = this.gamePlayerList[0].Id;
 			}
 			return this.nextGamePlayerId;
+		}
+		private set;		
+	}
+
+	@testVisible public ZV_GamePlayer__c nextGamePlayer {
+		get {
+			return this.gamePlayerByIdMap.get(this.nextGamePlayerId);
+		}
+		private set;		
+	}
+
+	@testVisible public ZV_Player__c nextPlayer {
+		get {
+			return this.nextGamePlayer.Player__r;
 		}
 		private set;		
 	}
@@ -162,10 +209,23 @@ public class ZV_GameCellContext {
 		private set;
 	}
 
+    @testVisible public Map<Id, ZV_Player__c> playerByGamePlayerIdMap {
+		get {
+			if (this.playerByGamePlayerIdMap == null) {
+				this.playerByGamePlayerIdMap = new Map<Id, ZV_Player__c>();
+				for(ZV_GamePlayer__c gamePlayer : this.gamePlayerList) {
+					playerByGamePlayerIdMap.put(gamePlayer.Id, gamePlayer.Player__r);
+				}
+			}
+			return this.playerByGamePlayerIdMap;
+		} 
+		private set;
+	}
+
     @testVisible public Map<Id, ZV_Player__c> playerByIdMap {
 		get {
 			if (this.playerByIdMap == null) {
-				this.playerByIdMap = new Map<Id, ZV_Player__c>(this.playerByIdMap);
+				this.playerByIdMap = new Map<Id, ZV_Player__c>(this.playerList);
 			}
 			return this.playerByIdMap;
 		} 
@@ -220,6 +280,19 @@ public class ZV_GameCellContext {
 			}
 			return this.userNickName; 
 		} 
+		private set;
+	}
+	
+	@testVisible public Set<ZV_Cell__c> unoccupiedCellSet {
+		get {
+			Set<ZV_Cell__c> unoccupiedCellSet = new Set<ZV_Cell__c>();
+			for (ZV_Cell__c cell : this.board.Cells__r) {
+				if (cell.Occupant__c == null) {
+					unoccupiedCellSet.add(cell);
+				}
+			}
+			return unoccupiedCellSet;
+		}
 		private set;
 	}
 }

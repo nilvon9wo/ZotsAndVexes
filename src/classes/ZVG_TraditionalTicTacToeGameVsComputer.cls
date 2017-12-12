@@ -1,15 +1,29 @@
-public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
+public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf { 
 	ZV_PlayerService playerService;  
 	ZV_Randomizer randomizer;
+	ZVV_VictoryConditionHelper victoryConditionHelper;
 	
-	public ZVG_TraditionalTicTacToeGameVsComputer(ZV_PlayerService playerService, ZV_Randomizer randomizer) {
+	public ZVG_TraditionalTicTacToeGameVsComputer(
+			ZV_PlayerService playerService, 
+			ZV_Randomizer randomizer, 
+			ZVV_VictoryConditionHelper victoryConditionHelper
+		) {
 		this.playerService = playerService;
 		this.randomizer = randomizer;
+		this.victoryConditionHelper = victoryConditionHelper;
 	}
 
 	public ZVG_TraditionalTicTacToeGameVsComputer() {
-		this(new ZV_PlayerService(), new ZV_Randomizer());
+		this(new ZV_PlayerService(), new ZV_Randomizer(), new ZVV_VictoryConditionHelper());
 	}
+ 
+	private static List<Type> VICTORY_CONDITION_LIST = new List<Type>{ 
+		ZVV_FullHorizontalRow.class,
+		ZVV_FullVeriticalRow.class,
+		ZVV_UpperLeftCornerToLowerRightCorner.class,
+		ZVV_LowerLeftCornerToUpperRightCorner.class
+	};
+
 
     public List<ZV_GamePlayer__c> attachPlayers (List<ZV_Game__C> gameList) {
     	List<ZV_GamePlayer__c> gamePlayerList = new List<ZV_GamePlayer__c>();
@@ -37,13 +51,16 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
     	return gamePlayerList; 
     }
     
-	public Boolean canOccupyCell(ZV_GameCellContext gameCellContext) {
-		return gameCellContext.cell.Occupant__c == null;
+	public Boolean canOccupyCell(ZV_GameContext gameContext) {
+		return gameContext.cell.Occupant__c == null;
 	}
 	
-	
-	public List<ZV_Cell__c> occupyCells(ZV_GameCellContext gameCellContext) {
-		gameCellContext.cell.Occupant__c = gameCellContext.gamePlayerByUserIdMap.get(gameCellContext.userId).Id;
-		return new List<ZV_Cell__c>{gameCellContext.cell};
+	public List<ZV_Cell__c> occupyCells(ZV_GameContext gameContext) {
+		gameContext.cell.Occupant__c = gameContext.gamePlayerByUserIdMap.get(gameContext.userId).Id;
+		return new List<ZV_Cell__c>{gameContext.cell};
+	}
+	 
+	public Id declareWinner(ZV_GameContext gameContext) {
+		return this.victoryConditionHelper.declareWinner(VICTORY_CONDITION_LIST, gameContext); 
 	}    
 }

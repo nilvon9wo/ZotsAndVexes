@@ -27,11 +27,11 @@ public with sharing class ZV_CellService {
     	return cellList; 
     } 
     
-    public List<ZV_Cell__c> occupyCells(ZV_GameCellContext gameCellContext) {
+    public List<ZV_Cell__c> occupyCells(ZV_GameContext gameContext) {
     	List<ZV_Cell__c> cellList;
-    	if (this.cellOccupyValidator.validate(gameCellContext)) {
-    		cellList = this.gameLookup.getFor(gameCellContext.game)
-    			.occupyCells(gameCellContext);
+    	if (this.cellOccupyValidator.validate(gameContext)) {
+    		cellList = this.gameLookup.getFor(gameContext.game)
+    			.occupyCells(gameContext);
     	}
     	return cellList; 
     } 

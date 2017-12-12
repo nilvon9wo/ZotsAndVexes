@@ -5,6 +5,11 @@ public class ZV_Randomizer {
     	return Math.mod(randomNumber, 2) == 0;
     }
 
+    public ZV_Cell__c getRandomMember(Set<ZV_Cell__c> cellSet) {
+    	Integer randomNumber = this.getRandomNumber(cellSet.size());
+		return (new List<ZV_Cell__c>(cellSet))[randomNumber];    	
+    }
+
     public ZV_Player__c getRandomMember(Set<ZV_Player__c> playerSet) {
     	Integer randomNumber = this.getRandomNumber(playerSet.size());
 		return (new List<ZV_Player__c>(playerSet))[randomNumber];    	

@@ -1,12 +1,14 @@
 public class ZV_PlayerService {
 	ZV_PlayerRepository playerRepository; 
+	ZV_PlayerTypeEnumHelper playerTypeEnumHelper;
  	
- 	public ZV_PlayerService(ZV_PlayerRepository playerRepository) {
+ 	public ZV_PlayerService(ZV_PlayerRepository playerRepository, ZV_PlayerTypeEnumHelper playerTypeEnum) {
  		this.playerRepository = playerRepository; 
+ 		this.playerTypeEnumHelper = playerTypeEnumHelper; 
  	}
  
  	public ZV_PlayerService() {
- 		this(new ZV_PlayerRepository()); 
+ 		this(new ZV_PlayerRepository(), new ZV_PlayerTypeEnumHelper()); 
  	}
  
 	public ZV_PlayerCollections loadPlayers (List<ZV_Game__c> gameList) {
@@ -21,4 +23,7 @@ public class ZV_PlayerService {
     	return this.playerRepository.getRobotPlayerId(game);  
     }
     
+    public Boolean isRobot(ZV_Player__c player) {
+    	return this.playerTypeEnumHelper.convertToEnumFor(player) == ZV_PlayerTypeEnum.ROBOT;
+    }
 }

@@ -1,11 +1,11 @@
 public class ZV_CellOccupyResult {
     public List<ZV_Cell__c> updatedCellList {get; private set;}
-
-    public Id gameWinner;
     public String gameStatus = 'In Progress';
-    public Boolean forceFullRefresh = false;
+    public Id gameWinner;
     
-    public ZV_CellOccupyResult(List<ZV_Cell__c> updatedCellList) {
+    public ZV_CellOccupyResult(List<ZV_Cell__c> updatedCellList, ZV_Game__c game) {
     	this.updatedCellList = updatedCellList;
+    	this.gameStatus = game.Status__c;
+    	this.gameWinner = game.Winner__c;
     } 
 }

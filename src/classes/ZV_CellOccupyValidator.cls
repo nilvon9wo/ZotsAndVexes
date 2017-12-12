@@ -9,34 +9,34 @@ public class ZV_CellOccupyValidator {
 		this(new ZVG_GameLookup());
 	}
 	
-    public Boolean validate(ZV_GameCellContext gameCellContext) {
-    	return this.isUserInGame(gameCellContext)
-    		&& this.isUserNextPlayer(gameCellContext)
-    		&& this.canUserOccupyCell(gameCellContext);
+    public Boolean validate(ZV_GameContext gameContext) {
+    	return this.isUserInGame(gameContext)
+    		&& this.isUserNextPlayer(gameContext)
+    		&& this.canUserOccupyCell(gameContext);
     }
     
-    public Boolean isUserInGame(ZV_GameCellContext gameCellContext) {
-    	if (!gameCellContext.playerUserIdSet.contains(gameCellContext.userId)) { 
-    		throw new ZV_CellOccupyValidatorException(gameCellContext.userName + ' is not a player in game ' + gameCellContext.game.Name + '.');
+    public Boolean isUserInGame(ZV_GameContext gameContext) {
+    	if (!gameContext.playerUserIdSet.contains(gameContext.userId)) { 
+    		throw new ZV_CellOccupyValidatorException(gameContext.userName + ' is not a player in game ' + gameContext.game.Name + '.');
     	}
     	return true;
     }
     
-    public Boolean isUserNextPlayer(ZV_GameCellContext gameCellContext) {
-    	Id nextGamePlayer = gameCellContext.nextGamePlayerId;
-		Id currentUserGamePlayerId = gameCellContext.gamePlayerByUserIdMap
-			.get(gameCellContext.userId).Id;
+    public Boolean isUserNextPlayer(ZV_GameContext gameContext) {
+    	Id nextGamePlayer = gameContext.nextGamePlayerId;
+		Id currentUserGamePlayerId = gameContext.gamePlayerByUserIdMap
+			.get(gameContext.userId).Id;
 			
     	if (nextGamePlayer != currentUserGamePlayerId) {
-    		ZV_Player__c nextPlayer = gameCellContext.gamePlayerByIdMap.get(nextGamePlayer).Player__r;
+    		ZV_Player__c nextPlayer = gameContext.gamePlayerByIdMap.get(nextGamePlayer).Player__r;
     		String nextPlayerNickName = nextPlayer.NickName__c; 
-    		throw new ZV_CellOccupyValidatorException('The next player must be ' + nextPlayerNickName + ', not ' + gameCellContext.userNickName + '.');
+    		throw new ZV_CellOccupyValidatorException('The next player must be ' + nextPlayerNickName + ', not ' + gameContext.userNickName + '.');
     	}
     	return true;
     }
     
-    public Boolean canUserOccupyCell(ZV_GameCellContext gameCellContext) {
-    	return this.gameLookup.getFor(gameCellContext.game)
-    		.canOccupyCell(gameCellContext);
+    public Boolean canUserOccupyCell(ZV_GameContext gameContext) {
+    	return this.gameLookup.getFor(gameContext.game)
+    		.canOccupyCell(gameContext);
     } 
-} 
+}

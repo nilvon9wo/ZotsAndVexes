@@ -1,27 +1,35 @@
 public class ZV_CellAuraCtrl {
-	F45_DML_GenericDml genericDml;
+	F45_DML_GenericDml genericDml; 
 	ZV_CellService cellService;
 	ZV_GameService gameService;
+	ZV_PlayerService playerService;
 	ZV_RecordTypeCache recordTypeCache;   
+	ZVR_RobotPlayerHelper robotPlayerHelper;
 	
 	public ZV_CellAuraCtrl(
 			F45_DML_GenericDml genericDml, 
 			ZV_CellService cellService, 
-			ZV_GameService gameService, 
-			ZV_RecordTypeCache recordTypeCache
+			ZV_GameService gameService,
+			ZV_PlayerService playerService, 
+			ZV_RecordTypeCache recordTypeCache,
+			ZVR_RobotPlayerHelper robotPlayerHelper
 		) {
 		this.genericDml = genericDml;
 		this.cellService = cellService;
 		this.gameService = gameService;
+		this.playerService = playerService;
 		this.recordTypeCache = recordTypeCache;
+		this.robotPlayerHelper = robotPlayerHelper;
 	}		
 
 	public ZV_CellAuraCtrl() {
 		this(
-			new F45_DML_GenericDml(), 
-			new ZV_CellService(), 
+			new F45_DML_GenericDml(),  
+			new ZV_CellService(),  
 			new ZV_GameService(), 
-			new ZV_RecordTypeCache()
+			new ZV_PlayerService(),
+			new ZV_RecordTypeCache(),
+			new ZVR_RobotPlayerHelper()
 		);
 	}		
 
@@ -31,22 +39,38 @@ public class ZV_CellAuraCtrl {
     }
     	   
     public ZV_CellOccupyResult occupy(Id cellId) {
-    	this.recordTypeCache.registerRequired(new Set<SObjectType>{ZV_Game__c.SObjectType});
+    	this.recordTypeCache.registerRequired(new Set<SObjectType>{
+    		ZV_Game__c.SObjectType,
+    		ZV_Player__c.SObjectType 
+    	});
     	 
-    	ZV_GameCellContext gameCellContext = new ZV_GameCellContext(cellId);
-    	List<ZV_Cell__c> updatedCellList = this.cellService.occupyCells(gameCellContext); 
-		    	
-
+    	ZV_GameContext gameContext = new ZV_GameContext(cellId);
+   		gameContext.currentGamePlayer = gameContext.gamePlayerByUserIdMap.get(gameContext.userId);
+     	
+    	List<ZV_Cell__c> updatedCellList = this.cellService.occupyCells(gameContext);
+    	if (this.noGameWinner(gameContext)) {
+			this.gameService.updateNextPlayer(gameContext);
+			
+			/* FIXME:  Use queueable?
+			while(
+					this.noGameWinner(gameContext)
+					&& false // FIXME: this.playerService.isRobot(gameContext.nextPlayer)
+				) {
+	    		gameContext.currentGamePlayer = gameContext.nextGamePlayer;
+	    		updatedCellList.addAll(this.robotPlayerHelper.maneuver(gameContext));
+	    		this.gameService.updateNextPlayer(gameContext);
+			}
+			*/
+		
+    	} 
     	
-    	// TODO: Update next player 
-    	// TODO: While next player is robot do
-    	// TODO: -- Calculate robot's move(s)
-    	// TODO: -- Update cell(s)
-    	// TODO: -- Update next player 
-    	
-    	// TODO
-
 		this.genericDml.doUpsert(updatedCellList);    	  
-    	return new ZV_CellOccupyResult(updatedCellList);
+		this.genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});    	  
+    	return new ZV_CellOccupyResult(updatedCellList, gameContext.game);
+    }
+    
+    private Boolean noGameWinner(ZV_GameContext gameContext) {
+    	this.gameService.declareWinner(gameContext);
+    	return gameContext.game.Winner__c == null;
     }
 }

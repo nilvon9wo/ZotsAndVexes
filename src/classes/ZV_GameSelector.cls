@@ -2,6 +2,8 @@ public with sharing class ZV_GameSelector extends fflib_SObjectSelector {
 	public List<Schema.SObjectField> getSObjectFieldList(){
 		return new List<Schema.SObjectField> {
 			ZV_Game__c.Id,
+			ZV_Game__c.NextPlayer__c,
+			ZV_Game__c.RecordTypeId,
 			ZV_Game__c.Status__c,
 			ZV_Game__c.Winner__c
 		};
