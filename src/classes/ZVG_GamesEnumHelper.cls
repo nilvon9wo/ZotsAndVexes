@@ -26,12 +26,12 @@ public class ZVG_GamesEnumHelper {
     }
     
     public ZVG_GamesEnum convertToEnumFor(Id recordTypeId) { 
-    	return this.convertToEnumFor(
-    		this.recordTypeCache.getDeveloperNameFor(recordTypeId)
-    	);
+    	String developerName = this.recordTypeCache.getDeveloperNameFor(recordTypeId);
+    	return this.convertToEnumFor(developerName);
     }
 
     public ZVG_GamesEnum convertToEnumFor(String recordTypeName) {
-    	return NAME_TO_GAME_MAP.get(recordTypeName.toUpperCase().replace(' ', '_'));
+    	String mangledName = recordTypeName.toUpperCase().replace(' ', '_');
+    	return NAME_TO_GAME_MAP.get(mangledName);
     }
 }

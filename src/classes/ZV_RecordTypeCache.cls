@@ -20,10 +20,10 @@ public class ZV_RecordTypeCache {
     	}
     }
 
-    private Map<Id, String> DEVELOPER_NAME_BY_ID_MAP {  
+    private static Map<Id, String> DEVELOPER_NAME_BY_ID_MAP {  
     	get {
     		if (DEVELOPER_NAME_BY_ID_MAP == null) {
-    			Map<Id, String> DEVELOPER_NAME_BY_ID_MAP = new Map<Id, String>();
+    			DEVELOPER_NAME_BY_ID_MAP = new Map<Id, String>();
     			for (Id id : RECORD_TYPE_BY_ID_MAP.keySet()) {
     				DEVELOPER_NAME_BY_ID_MAP.put(id, RECORD_TYPE_BY_ID_MAP.get(id).DeveloperName);
     			}
@@ -38,7 +38,7 @@ public class ZV_RecordTypeCache {
     }
     
     public String getDeveloperNameFor(Id recordTypeId) {
-    	return this.DEVELOPER_NAME_BY_ID_MAP.get(recordTypeId);
+    	return DEVELOPER_NAME_BY_ID_MAP.get(recordTypeId);
     }
     
     private Map<Id, RecordType> buildRecordTypeByIdMap() {
