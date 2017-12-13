@@ -11,10 +11,11 @@ public class ZVV_LowerLeftCornerToUpperRightCorner implements ZVV_VictoryConditi
 		) {
 			
 			ZV_Cell__c cell = gameContext.cellByCellCoordinateMap.get(nextCheckCellCoordinate);
-			if (cell.Occupant__c == currentGamePlayerId) {
+			Boolean playerInCell = cell != null && cell.Occupant__c == currentGamePlayerId;  
+			if (playerInCell) {
 				nextCheckCellCoordinate = this.getNextCell(nextCheckCellCoordinate);
 				if (nextCheckCellCoordinate.x > gameContext.board.Width__c) {
-					gameContext.game.Winner__c = gameContext.currentPlayer.Id;
+					return gameContext.currentPlayer.Id;
 				}
 			}
 			else {
@@ -22,7 +23,7 @@ public class ZVV_LowerLeftCornerToUpperRightCorner implements ZVV_VictoryConditi
 			}
 		}
 		
-		return gameContext.game.Winner__c; 
+		return null; 
 	} 
 
 	private ZV_CellCoordinate getNextCell(ZV_CellCoordinate nextCheckCellCoordinate) {

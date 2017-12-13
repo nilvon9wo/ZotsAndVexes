@@ -16,6 +16,10 @@ public class ZVV_VictoryConditionHelper {
     		gameContext.game.Winner__c = victoryConditionInstance.checkForWinner(gameContext); 
     	} 
     	
+    	if (gameContext.game.Winner__c != null) {
+    		gameContext.game.Status__c = 'Won';
+    	}
+    	
     	return gameContext.game.Winner__c; 
     }
 }
