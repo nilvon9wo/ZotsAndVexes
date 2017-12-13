@@ -29,7 +29,7 @@ public with sharing class ZV_PlayerRepository {
  		);
  	}
  
-	private static String DEFAULT_ROBOT_STRATEGY = 'Idiot';
+	private static String DEFAULT_ROBOT_STRATEGY = 'ZVR_RandomOpenCellStrategy';
 	private static List<ZV_Player__c> PLAYER_LIST;
 	
 	// Mapped as SObject because of Apex limitation

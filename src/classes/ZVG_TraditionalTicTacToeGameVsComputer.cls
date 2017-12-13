@@ -1,27 +1,39 @@
-public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf { 
+public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {  
 	ZV_PlayerService playerService;  
 	ZV_Randomizer randomizer;
-	ZVV_VictoryConditionHelper victoryConditionHelper;
+	ZVSC_StalemateConditionHelper stalemateConditionHelper;
+	ZVVC_VictoryConditionHelper victoryConditionHelper;
 	
 	public ZVG_TraditionalTicTacToeGameVsComputer(
 			ZV_PlayerService playerService, 
 			ZV_Randomizer randomizer, 
-			ZVV_VictoryConditionHelper victoryConditionHelper
+			ZVSC_StalemateConditionHelper stalemateConditionHelper,
+			ZVVC_VictoryConditionHelper victoryConditionHelper
 		) {
 		this.playerService = playerService;
 		this.randomizer = randomizer;
+		this.stalemateConditionHelper = stalemateConditionHelper;
 		this.victoryConditionHelper = victoryConditionHelper;
 	}
 
 	public ZVG_TraditionalTicTacToeGameVsComputer() {
-		this(new ZV_PlayerService(), new ZV_Randomizer(), new ZVV_VictoryConditionHelper());
+		this(
+			new ZV_PlayerService(), 
+			new ZV_Randomizer(), 
+			new ZVSC_StalemateConditionHelper(), 
+			new ZVVC_VictoryConditionHelper()
+		);
 	}
  
 	private static List<Type> VICTORY_CONDITION_LIST = new List<Type>{
-		ZVV_FullHorizontalRow.class,
-		ZVV_FullVeriticalRow.class,
-		ZVV_UpperLeftCornerToLowerRightCorner.class,
-		ZVV_LowerLeftCornerToUpperRightCorner.class
+		ZVVC_FullColumn.class,
+		ZVVC_FullRow.class,
+		ZVVC_LowerLeftCornerToUpperRightCorner.class,
+		ZVVC_UpperLeftCornerToLowerRightCorner.class
+	};
+
+	private static List<Type> STALEMATE_CONDITION_LIST = new List<Type>{
+		ZVSC_NoEmptyCells.class
 	};
 
 
@@ -41,7 +53,7 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
     		Player__c = playerService.getHumanPlayerId(game),
     		PlayOrder__c = humanGoesFirst ? 1 : 2
     	));
-    	
+    	  
     	Boolean robotGoesFirst = !humanGoesFirst;
     	gamePlayerList.add(new ZV_GamePlayer__c(
     		Game__c = game.id,
@@ -62,5 +74,9 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
 	 
 	public Id checkForWinner(ZV_GameContext gameContext) {
 		return this.victoryConditionHelper.checkForWinner(VICTORY_CONDITION_LIST, gameContext); 
+	}
+	
+	public Boolean checkForStalemate(ZV_GameContext gameContext) {
+		return this.stalemateConditionHelper.checkForStalemate(STALEMATE_CONDITION_LIST, gameContext); 
 	}    
 }

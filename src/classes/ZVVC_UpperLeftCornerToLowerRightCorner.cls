@@ -1,15 +1,14 @@
-public class ZVV_LowerLeftCornerToUpperRightCorner implements ZVV_VictoryConditionIntf {
+public class ZVVC_UpperLeftCornerToLowerRightCorner implements ZVVC_VictoryConditionIntf {
 	public Id checkForWinner(ZV_GameContext gameContext) {
 		Id currentGamePlayerId = gameContext.currentGamePlayer.Id;
-		ZV_CellCoordinate nextCheckCellCoordinate = new ZV_CellCoordinate(1, (Integer) gameContext.board.Height__c);
-		
+		ZV_CellCoordinate nextCheckCellCoordinate = new ZV_CellCoordinate(1, 1);
+
 		Boolean isVictoryPossible = true;
 		while (
 			isVictoryPossible
 			&& gameContext.game.Winner__c == null
-			&& (nextCheckCellCoordinate.x <= gameContext.board.Width__c || nextCheckCellCoordinate.y > 0)
+			&& (nextCheckCellCoordinate.x <= gameContext.board.Width__c || nextCheckCellCoordinate.y <= gameContext.board.Height__c)
 		) {
-			
 			ZV_Cell__c cell = gameContext.cellByCellCoordinateMap.get(nextCheckCellCoordinate);
 			Boolean playerInCell = cell != null && cell.Occupant__c == currentGamePlayerId;  
 			if (playerInCell) {
@@ -27,6 +26,6 @@ public class ZVV_LowerLeftCornerToUpperRightCorner implements ZVV_VictoryConditi
 	} 
 
 	private ZV_CellCoordinate getNextCell(ZV_CellCoordinate nextCheckCellCoordinate) {
-		return new ZV_CellCoordinate(nextCheckCellCoordinate.x + 1, nextCheckCellCoordinate.y - 1);
+		return new ZV_CellCoordinate(nextCheckCellCoordinate.x + 1, nextCheckCellCoordinate.y + 1);
 	}
 }

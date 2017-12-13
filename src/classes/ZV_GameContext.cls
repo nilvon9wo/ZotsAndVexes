@@ -287,9 +287,11 @@ public class ZV_GameContext {
 	
 	@testVisible public Set<ZV_Cell__c> unoccupiedCellSet {
 		get {
+			Map<Id, ZV_Cell__c> updatedCellByIdMap = new Map<Id, ZV_Cell__c>(this.updatedCellList);
+			
 			Set<ZV_Cell__c> unoccupiedCellSet = new Set<ZV_Cell__c>();
 			for (ZV_Cell__c cell : this.board.Cells__r) {
-				if (cell.Occupant__c == null) {
+				if (cell.Occupant__c == null && updatedCellByIdMap.get(cell.Id) .Occupant__c == null) {
 					unoccupiedCellSet.add(cell);
 				}
 			}
@@ -297,4 +299,6 @@ public class ZV_GameContext {
 		}
 		private set;
 	}
+	
+	public List<ZV_Cell__c> updatedCellList;
 }

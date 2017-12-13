@@ -25,12 +25,12 @@ public class ZV_PlayerTypeEnumHelper {
     	return this.convertToEnumFor(player.RecordTypeId);
     }
     
-    public ZV_PlayerTypeEnum convertToEnumFor(Id recordTypeId) { 
+    public ZV_PlayerTypeEnum convertToEnumFor(Id recordTypeId) {
     	return this.convertToEnumFor(this.recordTypeCache.getDeveloperNameFor(recordTypeId));
     }
 
     public ZV_PlayerTypeEnum convertToEnumFor(String developerName) { 
-    	return NAME_TO_GAME_MAP.get(developerName);
+    	return NAME_TO_GAME_MAP.get(developerName.toUpperCase());
     }
 
 }
