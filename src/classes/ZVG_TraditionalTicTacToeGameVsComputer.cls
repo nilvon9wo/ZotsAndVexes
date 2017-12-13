@@ -18,12 +18,10 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
 	}
  
 	private static List<Type> VICTORY_CONDITION_LIST = new List<Type>{
-/*		 
 		ZVV_FullHorizontalRow.class,
 		ZVV_FullVeriticalRow.class,
 		ZVV_UpperLeftCornerToLowerRightCorner.class,
 		ZVV_LowerLeftCornerToUpperRightCorner.class
-*/		
 	};
 
 
@@ -62,7 +60,7 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
 		return new List<ZV_Cell__c>{gameContext.cell};
 	}
 	 
-	public Id declareWinner(ZV_GameContext gameContext) {
-		return this.victoryConditionHelper.declareWinner(VICTORY_CONDITION_LIST, gameContext); 
+	public Id checkForWinner(ZV_GameContext gameContext) {
+		return this.victoryConditionHelper.checkForWinner(VICTORY_CONDITION_LIST, gameContext); 
 	}    
 }

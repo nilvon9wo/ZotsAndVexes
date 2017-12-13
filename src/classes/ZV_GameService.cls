@@ -36,8 +36,8 @@ public class ZV_GameService {
     	return availablePlayOrderValueList[0];
     }
      
-    public Id declareWinner(ZV_GameContext gameContext) { 
+    public Id checkForWinner(ZV_GameContext gameContext) { 
 		return this.gameLookup.getFor(gameContext.game)
-    			.declareWinner(gameContext);     	 
+    			.checkForWinner(gameContext);     	 
     }
 }

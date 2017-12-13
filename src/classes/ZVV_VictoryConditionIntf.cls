@@ -1,3 +1,3 @@
 public interface ZVV_VictoryConditionIntf {
-    Id declareWinner(ZV_GameContext gameContext); 
+    Id checkForWinner(ZV_GameContext gameContext); 
 }

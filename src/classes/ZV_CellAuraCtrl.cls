@@ -68,7 +68,7 @@ public class ZV_CellAuraCtrl {
     }
     
     private Boolean noGameWinner(ZV_GameContext gameContext) {
-    	this.gameService.declareWinner(gameContext);
+    	this.gameService.checkForWinner(gameContext);
     	return gameContext.game.Winner__c == null;
     }
 }

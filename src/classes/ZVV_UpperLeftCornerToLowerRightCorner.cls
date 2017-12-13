@@ -1,19 +1,23 @@
 public class ZVV_UpperLeftCornerToLowerRightCorner implements ZVV_VictoryConditionIntf {
-	public Id declareWinner(ZV_GameContext gameContext) {
+	public Id checkForWinner(ZV_GameContext gameContext) {
 		Id currentGamePlayerId = gameContext.currentGamePlayer.Id;
 		ZV_CellCoordinate nextCheckCellCoordinate = new ZV_CellCoordinate(1, 1);
+
+		Boolean isVictoryPossible = true;
 		while (
-			gameContext.game.Winner__c == null
-			&& nextCheckCellCoordinate.x <= gameContext.board.Width__c
-			&& nextCheckCellCoordinate.y <= gameContext.board.Height__c
+			isVictoryPossible
+			&& gameContext.game.Winner__c == null
+			&& (nextCheckCellCoordinate.x <= gameContext.board.Width__c || nextCheckCellCoordinate.y <= gameContext.board.Height__c)
 		) {
-			
 			ZV_Cell__c cell = gameContext.cellByCellCoordinateMap.get(nextCheckCellCoordinate);
 			if (cell.Occupant__c == currentGamePlayerId) {
 				nextCheckCellCoordinate = this.getNextCell(nextCheckCellCoordinate);
 				if (nextCheckCellCoordinate.x > gameContext.board.Width__c) {
-					gameContext.game.Winner__c = currentGamePlayerId;
+					gameContext.game.Winner__c = gameContext.currentPlayer.Id;
 				}
+			}
+			else {
+				isVictoryPossible = false;
 			}
 		}
 		
@@ -21,6 +25,6 @@ public class ZVV_UpperLeftCornerToLowerRightCorner implements ZVV_VictoryConditi
 	} 
 
 	private ZV_CellCoordinate getNextCell(ZV_CellCoordinate nextCheckCellCoordinate) {
-		return new ZV_CellCoordinate(nextCheckCellCoordinate.x++, nextCheckCellCoordinate.y++);
+		return new ZV_CellCoordinate(nextCheckCellCoordinate.x + 1, nextCheckCellCoordinate.y + 1);
 	}
 }
