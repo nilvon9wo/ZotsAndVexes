@@ -5,7 +5,7 @@ public class ZV_CellOccupyValidator {
 		this.gameLookup = gameLookup;
 	}
 
-	public ZV_CellOccupyValidator() {
+	public ZV_CellOccupyValidator() { 
 		this(new ZVG_GameLookup());
 	}
 	

@@ -138,11 +138,12 @@ public class ZV_GameContext {
 		private set;
 	}
 
-    @testVisible public Map<Decimal, ZV_GamePlayer__c> gamePlayerByOrderMap { 
+	// NOTE: This is a map of SObject because of SFDC limitations.
+    @testVisible public Map<Decimal, SObject> gamePlayerByOrderMap { 
 		get {
 			if (this.gamePlayerByOrderMap == null) { 
 				this.gamePlayerByOrderMap 
-					= (Map<Decimal, ZV_GamePlayer__c>) this.mapHelper.buidMapBySpecifiedDecimal(this.gamePlayerList, ZV_GamePlayer__c.PlayOrder__c);
+					= this.mapHelper.buidMapBySpecifiedDecimal(this.gamePlayerList, ZV_GamePlayer__c.PlayOrder__c);
 			}
 			return this.gamePlayerByOrderMap;
 		} 
@@ -232,11 +233,12 @@ public class ZV_GameContext {
 		private set;
 	}
 
-    @testVisible public Map<Id, ZV_Player__c> playerByUserIdMap {
+	// NOTE: This is a map of SObject because of SFDC limitations.
+    @testVisible public Map<Id, SObject> playerByUserIdMap {
 		get {
 			if (this.playerByUserIdMap == null) {
 				this.playerByUserIdMap 
-					= (Map<Id, ZV_Player__c>) this.mapHelper.buidMapBySpecifiedId(this.playerList, ZV_Player__c.User__c);
+					= this.mapHelper.buidMapBySpecifiedId(this.playerList, ZV_Player__c.User__c);
 			}
 			return this.playerByUserIdMap;
 		} 
@@ -276,7 +278,7 @@ public class ZV_GameContext {
 	@testVisible public String userNickName {   
 		get {
 			if (this.userNickName == null) {
-				this.userNickName = this.playerByUserIdMap.get(this.userId).NickName__c;
+				this.userNickName = ((ZV_Player__c) this.playerByUserIdMap.get(this.userId)).NickName__c;
 			}
 			return this.userNickName; 
 		} 

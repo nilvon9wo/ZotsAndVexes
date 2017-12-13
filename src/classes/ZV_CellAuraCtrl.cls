@@ -51,22 +51,20 @@ public class ZV_CellAuraCtrl {
     	if (this.noGameWinner(gameContext)) {
 			this.gameService.updateNextPlayer(gameContext);
 			
-			/* FIXME:  Use queueable?
 			while(
 					this.noGameWinner(gameContext)
-					&& false // FIXME: this.playerService.isRobot(gameContext.nextPlayer)
+					&& this.playerService.isRobot(gameContext.nextPlayer)
 				) {
 	    		gameContext.currentGamePlayer = gameContext.nextGamePlayer;
 	    		updatedCellList.addAll(this.robotPlayerHelper.maneuver(gameContext));
 	    		this.gameService.updateNextPlayer(gameContext);
 			}
-			*/
 		
     	} 
     	
 		this.genericDml.doUpsert(updatedCellList);    	  
-		this.genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});    	  
-    	return new ZV_CellOccupyResult(updatedCellList, gameContext.game);
+		this.genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});
+		return new ZV_CellOccupyResult(updatedCellList, gameContext.game); 
     }
     
     private Boolean noGameWinner(ZV_GameContext gameContext) {

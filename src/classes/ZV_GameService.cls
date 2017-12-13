@@ -22,7 +22,7 @@ public class ZV_GameService {
     		? availablePlayOrderValueList[0]
     		: findNewPlayOrderValue(availablePlayOrderValueList, currentPlayOrderValue);
     	
-    	ZV_GamePlayer__c newNextPlayer = gameContext.gamePlayerByOrderMap.get(newPlayOrderValue);
+    	ZV_GamePlayer__c newNextPlayer = (ZV_GamePlayer__c) gameContext.gamePlayerByOrderMap.get(newPlayOrderValue);
     	gameContext.game.NextPlayer__c = newNextPlayer.Id;
     	return newNextPlayer; 
     }

@@ -19,7 +19,9 @@ public virtual class F45_DML_GenericDml {
     }
 
     public virtual F45_DML_UpsertResultListWrapper doUpsert(List<SObject> objectList, Boolean isAllOrNone) {
-    	return new F45_DML_UpsertResultListWrapper(Database.upsert(objectList, isAllOrNone));
+    	return (objectList != null)
+    		? new F45_DML_UpsertResultListWrapper(Database.upsert(objectList, isAllOrNone))
+    		: null;
     }
     
     public virtual F45_DML_UpsertResultListWrapper doUpsert(List<SObject> objectList) {

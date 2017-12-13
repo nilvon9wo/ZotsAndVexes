@@ -2,7 +2,7 @@ public class ZV_PlayerService {
 	ZV_PlayerRepository playerRepository; 
 	ZV_PlayerTypeEnumHelper playerTypeEnumHelper;
  	
- 	public ZV_PlayerService(ZV_PlayerRepository playerRepository, ZV_PlayerTypeEnumHelper playerTypeEnum) {
+ 	public ZV_PlayerService(ZV_PlayerRepository playerRepository, ZV_PlayerTypeEnumHelper playerTypeEnumHelper) {
  		this.playerRepository = playerRepository; 
  		this.playerTypeEnumHelper = playerTypeEnumHelper; 
  	}

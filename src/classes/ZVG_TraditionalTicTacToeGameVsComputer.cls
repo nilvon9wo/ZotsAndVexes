@@ -17,11 +17,13 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
 		this(new ZV_PlayerService(), new ZV_Randomizer(), new ZVV_VictoryConditionHelper());
 	}
  
-	private static List<Type> VICTORY_CONDITION_LIST = new List<Type>{ 
+	private static List<Type> VICTORY_CONDITION_LIST = new List<Type>{
+/*		 
 		ZVV_FullHorizontalRow.class,
 		ZVV_FullVeriticalRow.class,
 		ZVV_UpperLeftCornerToLowerRightCorner.class,
 		ZVV_LowerLeftCornerToUpperRightCorner.class
+*/		
 	};
 
 
