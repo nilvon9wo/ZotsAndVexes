@@ -291,7 +291,10 @@ public class ZV_GameContext {
 			
 			Set<ZV_Cell__c> unoccupiedCellSet = new Set<ZV_Cell__c>();
 			for (ZV_Cell__c cell : this.board.Cells__r) {
-				if (cell.Occupant__c == null && updatedCellByIdMap.get(cell.Id) .Occupant__c == null) {
+				if (
+						cell.Occupant__c == null
+						&& (updatedCellByIdMap.get(cell.Id) == null || updatedCellByIdMap.get(cell.Id).Occupant__c == null)
+					) {
 					unoccupiedCellSet.add(cell);
 				}
 			}
