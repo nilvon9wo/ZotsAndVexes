@@ -9,6 +9,11 @@
         <value>Games</value>
     </caseValues>
     <fields>
+        <label><!-- Next Player --></label>
+        <name>NextPlayer__c</name>
+        <relationshipLabel><!-- Games --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Status --></label>
         <name>Status__c</name>
         <picklistValues>
@@ -18,6 +23,10 @@
         <picklistValues>
             <masterLabel>In Progress</masterLabel>
             <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Stalemate</masterLabel>
@@ -31,7 +40,7 @@
     <fields>
         <label><!-- Winner --></label>
         <name>Winner__c</name>
-        <relationshipLabel><!-- Games --></relationshipLabel>
+        <relationshipLabel><!-- GamesWon --></relationshipLabel>
     </fields>
     <layouts>
         <layout>Game Layout</layout>

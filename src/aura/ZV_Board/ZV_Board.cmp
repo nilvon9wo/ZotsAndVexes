@@ -1,8 +1,4 @@
-<aura:component controller="ZV_BoardAuraCtrl" implements="
-		flexipage:availableForRecordHome, 
-		force:appHostable, 
-		force:hasRecordId
-	">
+<aura:component controller="ZV_BoardAuraCtrl" implements="flexipage:availableForRecordHome,force:appHostable,force:hasRecordId">
 
 	<aura:attribute access="public" name="recordId" type="Id" />
 	<aura:attribute access="private" name="board" type="ZV_Board__c" />

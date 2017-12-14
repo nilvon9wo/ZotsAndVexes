@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>User__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IconVariant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

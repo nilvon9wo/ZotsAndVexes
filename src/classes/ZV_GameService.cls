@@ -1,16 +1,19 @@
 public class ZV_GameService {  
-	F45_DML_GenericDml genericDml; 
+	F45_DML_GenericDml genericDml;
+	ZV_GamePlayerService gamePlayerService; 
 	ZV_PlayerService playerService;
 	ZVG_GameLookup gameLookup;
 	ZVR_RobotPlayerHelper robotPlayerHelper;
-
+ 
 	public ZV_GameService(
-			F45_DML_GenericDml genericDml, 
+			F45_DML_GenericDml genericDml,
+			ZV_GamePlayerService gamePlayerService, 
 			ZV_PlayerService playerService, 
 			ZVG_GameLookup gameLookup,
 			ZVR_RobotPlayerHelper robotPlayerHelper
 		) { 
 		this.genericDml = genericDml;
+		this.gamePlayerService = gamePlayerService;
 		this.playerService = playerService;
 		this.gameLookup = gameLookup;
 		this.robotPlayerHelper = robotPlayerHelper;
@@ -19,6 +22,7 @@ public class ZV_GameService {
 	public ZV_GameService() {
 		this(
 			new F45_DML_GenericDml(),  
+			new ZV_GamePlayerService(),
 			new ZV_PlayerService(),
 			new ZVG_GameLookup(),
 			new ZVR_RobotPlayerHelper()
@@ -27,7 +31,7 @@ public class ZV_GameService {
 	
     public ZV_CellOccupyResult reactToOccupiedCell(ZV_GameContext gameContext) {
     	if (this.noGameWinner(gameContext)) {
-			this.updateNextPlayer(gameContext);
+			this.gamePlayerService.findNextGamePlayer(gameContext);
 
 			while(
 					this.noGameWinner(gameContext)
@@ -35,7 +39,7 @@ public class ZV_GameService {
 				) {
 	    		gameContext.currentGamePlayer = gameContext.nextGamePlayer;
 	    		gameContext.updatedCellList.addAll(this.robotPlayerHelper.maneuver(gameContext));
-	    		this.updateNextPlayer(gameContext);
+	    		this.gamePlayerService.findNextGamePlayer(gameContext);
 			}
     	} 
 
@@ -44,33 +48,6 @@ public class ZV_GameService {
 		return new ZV_CellOccupyResult(gameContext.updatedCellList, gameContext.game); 
     }
 
-    private ZV_GamePlayer__c updateNextPlayer(ZV_GameContext gameContext) {
-    	ZV_GamePlayer__c currentNextPlayer = gameContext.nextGamePlayer;
-    	Decimal currentPlayOrderValue = currentNextPlayer.PlayOrder__c;
-    	
-    	List<Decimal> availablePlayOrderValueList = new List<Decimal>(gameContext.gamePlayerByOrderMap.keySet()); 
-    	availablePlayOrderValueList.sort();
-
-		// We use the maximum to avoid looping through a large list of players.
-    	Decimal maximum = availablePlayOrderValueList[availablePlayOrderValueList.size() - 1]; 
-    	Decimal newPlayOrderValue = (currentPlayOrderValue == maximum) 
-    		? availablePlayOrderValueList[0]
-    		: findNewPlayOrderValue(availablePlayOrderValueList, currentPlayOrderValue);
-    	
-    	ZV_GamePlayer__c newNextPlayer = (ZV_GamePlayer__c) gameContext.gamePlayerByOrderMap.get(newPlayOrderValue);
-    	gameContext.game.NextPlayer__c = newNextPlayer.Id;
-    	return newNextPlayer; 
-    }
-    
-    private Decimal findNewPlayOrderValue(List<Decimal> availablePlayOrderValueList, Decimal currentPlayOrderValue) {
-    	for (Decimal d: availablePlayOrderValueList) {
-    		if (d > currentPlayOrderValue) { 
-    			return d;
-    		}
-    	}
-    	return availablePlayOrderValueList[0];
-    }
-    
     public Boolean isInProgress(ZV_GameContext gameContext) {
     	return noGameWinner(gameContext)
     		&& noStalemate(gameContext);

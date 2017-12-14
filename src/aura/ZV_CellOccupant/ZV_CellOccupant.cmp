@@ -1,4 +1,4 @@
-<aura:component>
+<aura:component >
 	<aura:attribute access="public" name="gamePlayerId" type="Id"/>
 	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
 	
@@ -7,11 +7,10 @@
 
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 	
-	<lightning:icon 
-		iconName="{!v.player.IconName__c}"
+	<lightning:icon iconName="{!v.player.IconName__c}"
 		alternativeText="{!v.simpleMarker}"
 		title="{!v.simpleMarker}"
 		size="large"
 		variant="{!v.player.IconVariant__c}"
 	/>
-</aura:component> 
+</aura:component>

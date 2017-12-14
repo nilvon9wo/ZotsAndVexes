@@ -9,6 +9,14 @@
         <value>Players</value>
     </caseValues>
     <fields>
+        <label><!-- Icon Name --></label>
+        <name>IconName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Icon Variant --></label>
+        <name>IconVariant__c</name>
+    </fields>
+    <fields>
         <label><!-- Nickname --></label>
         <name>Nickname__c</name>
     </fields>

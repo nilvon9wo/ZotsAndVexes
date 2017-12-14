@@ -14,8 +14,8 @@
         <relationshipLabel><!-- Cells --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Game Player --></label>
-        <name>GamePlayer__c</name>
+        <label><!-- Occupant --></label>
+        <name>Occupant__c</name>
         <relationshipLabel><!-- Cells --></relationshipLabel>
     </fields>
     <fields>

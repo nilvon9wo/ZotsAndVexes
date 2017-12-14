@@ -66,10 +66,10 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>GamePlayer__c</fullName>
+        <fullName>Occupant__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Game Player</label>
+        <label>Occupant</label>
         <referenceTo>ZV_GamePlayer__c</referenceTo>
         <relationshipLabel>Cells</relationshipLabel>
         <relationshipName>Cells</relationshipName>

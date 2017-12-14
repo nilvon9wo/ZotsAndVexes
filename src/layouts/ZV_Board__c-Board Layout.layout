@@ -82,7 +82,7 @@
         <fields>NAME</fields>
         <fields>X__c</fields>
         <fields>Y__c</fields>
-        <fields>GamePlayer__c</fields>
+        <fields>Occupant__c</fields>
         <relatedList>ZV_Cell__c.Board__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

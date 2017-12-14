@@ -1,25 +1,33 @@
 public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {  
+	ZV_GamePlayerService gamePlayerService;  
 	ZV_PlayerService playerService;  
 	ZV_Randomizer randomizer;
+	ZVR_RobotPlayerHelper robotPlayerHelper;
 	ZVSC_StalemateConditionHelper stalemateConditionHelper;
 	ZVVC_VictoryConditionHelper victoryConditionHelper;
 	
 	public ZVG_TraditionalTicTacToeGameVsComputer(
+			ZV_GamePlayerService gamePlayerService,
 			ZV_PlayerService playerService, 
-			ZV_Randomizer randomizer, 
+			ZV_Randomizer randomizer,
+			ZVR_RobotPlayerHelper robotPlayerHelper, 
 			ZVSC_StalemateConditionHelper stalemateConditionHelper,
 			ZVVC_VictoryConditionHelper victoryConditionHelper
 		) {
+		this.gamePlayerService = gamePlayerService;
 		this.playerService = playerService;
 		this.randomizer = randomizer;
+		this.robotPlayerHelper = robotPlayerHelper;
 		this.stalemateConditionHelper = stalemateConditionHelper;
 		this.victoryConditionHelper = victoryConditionHelper;
 	}
 
 	public ZVG_TraditionalTicTacToeGameVsComputer() {
 		this(
+			new ZV_GamePlayerService(),
 			new ZV_PlayerService(), 
 			new ZV_Randomizer(), 
+			new ZVR_RobotPlayerHelper(),
 			new ZVSC_StalemateConditionHelper(), 
 			new ZVVC_VictoryConditionHelper()
 		);
@@ -61,6 +69,15 @@ public class ZVG_TraditionalTicTacToeGameVsComputer implements ZVG_GameIntf {
     		PlayOrder__c = robotGoesFirst ? 1 : 2
     	));
     	return gamePlayerList; 
+    }
+    
+    public ZV_GameContext initializePlay(ZV_GameContext gameContext) {
+		if (this.playerService.isRobot(gameContext.nextPlayer)) {
+    		gameContext.currentGamePlayer = gameContext.nextGamePlayer;
+    		gameContext.updatedCellList = this.robotPlayerHelper.maneuver(gameContext);
+			this.gamePlayerService.findNextGamePlayer(gameContext);
+		}    	
+    	return gameContext;
     }
     
 	public Boolean canOccupyCell(ZV_GameContext gameContext) {

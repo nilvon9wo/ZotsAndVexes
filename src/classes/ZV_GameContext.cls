@@ -9,7 +9,7 @@ public class ZV_GameContext {
 	ZV_UserInfoWrapper userInfoWrapper;
 
 	public ZV_GameContext(
-			Id cellId,
+			Id seedId,
 			ZV_BoardSelector boardSelector,
 			ZV_CellSelector cellSelector,
 			ZV_GameSelector gameSelector,
@@ -19,7 +19,8 @@ public class ZV_GameContext {
 			ZV_SetHelper setHelper,
 			ZV_UserInfoWrapper userInfoWrapper
 		) {
-		this.cellId = cellId;
+		this.seedId = seedId; 
+		
 		this.boardSelector = boardSelector;
 		this.cellSelector = cellSelector; 
 		this.gameSelector = gameSelector;
@@ -29,10 +30,10 @@ public class ZV_GameContext {
 		this.setHelper = setHelper;
 		this.userInfoWrapper = userInfoWrapper;
 	}		
-
-	public ZV_GameContext(Id cellId) {
+ 
+	public ZV_GameContext(Id seedId) {
 		this(
-			cellId,
+			seedId,
 			new ZV_BoardSelector(), 
 			new ZV_CellSelector(), 
 			new ZV_GameSelector(), 
@@ -75,6 +76,13 @@ public class ZV_GameContext {
 	}
 
     @testVisible public Id cellId {get; private set;}
+    
+    @testVisible public List<ZV_Cell__c> cellList {
+    	get {
+    		return this.board.Cells__r;
+    	}
+    	private set;
+    }
 
     @testVisible public Map<ZV_CellCoordinate, ZV_Cell__c> cellByCellCoordinateMap {
 		get {
@@ -254,6 +262,23 @@ public class ZV_GameContext {
 		} 
 		private set;
 	} 
+	
+	private Id seedId {
+		get;
+		set {
+			if (value != null) {
+				this.seedSObjectType = value.getSObjectType();
+				if (this.seedSObjectType == ZV_Board__c.SObjectType) {
+					this.boardId = value;
+				} 
+				else if (this.seedSObjectType == ZV_Cell__c.SObjectType) {
+					this.cellId = value;
+				}
+			}
+		}
+	}
+		
+	private SObjectType seedSObjectType;	
 
 	@testVisible public Id userId {
 		get {
@@ -287,7 +312,9 @@ public class ZV_GameContext {
 	
 	@testVisible public Set<ZV_Cell__c> unoccupiedCellSet {
 		get {
-			Map<Id, ZV_Cell__c> updatedCellByIdMap = new Map<Id, ZV_Cell__c>(this.updatedCellList);
+			Map<Id, ZV_Cell__c> updatedCellByIdMap = (this.updatedCellList != null) 
+				? new Map<Id, ZV_Cell__c>(this.updatedCellList)
+				: new Map<Id, ZV_Cell__c>();
 			
 			Set<ZV_Cell__c> unoccupiedCellSet = new Set<ZV_Cell__c>();
 			for (ZV_Cell__c cell : this.board.Cells__r) {

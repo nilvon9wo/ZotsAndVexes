@@ -52,6 +52,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>NextPlayer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Next Player</label>
+        <referenceTo>ZV_GamePlayer__c</referenceTo>
+        <relationshipLabel>Games</relationshipLabel>
+        <relationshipName>GamesAwaitingMove</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
@@ -64,11 +77,15 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>In Progress</fullName>
+                    <fullName>New</fullName>
                     <default>true</default>
                 </value>
                 <value>
-                    <fullName>Abandoned</fullName>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Won</fullName>
                     <default>false</default>
                 </value>
                 <value>
@@ -76,7 +93,7 @@
                     <default>false</default>
                 </value>
                 <value>
-                    <fullName>Won</fullName>
+                    <fullName>Abandoned</fullName>
                     <default>false</default>
                 </value>
             </valueSetDefinition>
@@ -88,7 +105,7 @@
         <externalId>false</externalId>
         <label>Winner</label>
         <referenceTo>ZV_Player__c</referenceTo>
-        <relationshipLabel>Games</relationshipLabel>
+        <relationshipLabel>GamesWon</relationshipLabel>
         <relationshipName>Games</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -98,6 +115,10 @@
     <label>Game</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Winner__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
@@ -121,6 +142,10 @@
             </values>
             <values>
                 <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
                 <default>true</default>
             </values>
             <values>
