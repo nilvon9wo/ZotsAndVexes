@@ -92,7 +92,7 @@ public class ZV_GameContext {
 		get {
 			if (this.cellByCellCoordinateMap == null) {
 				this.cellByCellCoordinateMap = new Map<ZV_CellCoordinate, ZV_Cell__c>();
-				for (ZV_Cell__c cell : this.board.Cells__r) {
+				for (ZV_Cell__c cell : this.cellList) {
 					cellByCellCoordinateMap.put(new ZV_CellCoordinate((Integer) cell.X__c, (Integer) cell.Y__c), cell);
 				}
 			}
