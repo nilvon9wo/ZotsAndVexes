@@ -6,8 +6,11 @@ public class ZV_Randomizer {
     }
 
     public ZV_Cell__c getRandomMember(Set<ZV_Cell__c> cellSet) {
-    	Integer randomNumber = this.getRandomNumber(cellSet.size());
-		return (new List<ZV_Cell__c>(cellSet))[randomNumber];    	
+    	Integer cellSetSize = cellSet.size();
+    	
+    	return (cellSetSize > 0)
+    		? (new List<ZV_Cell__c>(cellSet))[this.getRandomNumber(cellSetSize)]
+    		: null;
     }
 
     public ZV_Player__c getRandomMember(Set<ZV_Player__c> playerSet) {

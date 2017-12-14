@@ -10,15 +10,18 @@ public class ZVVC_UpperLeftCornerToLowerRightCorner implements ZVVC_VictoryCondi
 			&& (nextCheckCellCoordinate.x <= gameContext.board.Width__c || nextCheckCellCoordinate.y <= gameContext.board.Height__c)
 		) {
 			ZV_Cell__c cell = gameContext.cellByCellCoordinateMap.get(nextCheckCellCoordinate);
-			Boolean playerInCell = cell != null && cell.Occupant__c == currentGamePlayerId;  
-			if (playerInCell) {
-				nextCheckCellCoordinate = this.getNextCell(nextCheckCellCoordinate);
-				if (nextCheckCellCoordinate.x > gameContext.board.Width__c) {
-					return gameContext.currentPlayer.Id;
+
+			if (cell != null) {
+				Boolean playerInCell = cell.Occupant__c == currentGamePlayerId;  
+				if (playerInCell) {
+					nextCheckCellCoordinate = this.getNextCell(nextCheckCellCoordinate);
+					if (nextCheckCellCoordinate.x > gameContext.board.Width__c) {
+						return gameContext.currentPlayer.Id;
+					}
 				}
-			}
-			else {
-				isVictoryPossible = false;
+				else {
+					isVictoryPossible = false;
+				}
 			}
 		}
 		

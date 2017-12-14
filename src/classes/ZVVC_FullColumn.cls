@@ -8,18 +8,21 @@ public class ZVVC_FullColumn implements ZVVC_VictoryConditionIntf {
 			&& nextCheckCellCoordinate.x <= gameContext.board.Width__c 
 		) {
 			ZV_Cell__c cell = gameContext.cellByCellCoordinateMap.get(nextCheckCellCoordinate);
-			Boolean playerNotInCell = cell != null && cell.Occupant__c != currentGamePlayerId;  
-			if (playerNotInCell) {
-				nextCheckCellCoordinate = this.getNextColumn(nextCheckCellCoordinate);
-			}
-			else {
-				if (nextCheckCellCoordinate.x < gameContext.board.Height__c) {
-					nextCheckCellCoordinate = this.getNextRow(nextCheckCellCoordinate); 
+
+			if (cell != null) {
+				Boolean playerNotInCell = cell.Occupant__c != currentGamePlayerId;  
+				if (playerNotInCell) {
+					nextCheckCellCoordinate = this.getNextColumn(nextCheckCellCoordinate);
 				}
 				else {
-					return gameContext.currentPlayer.Id;
-				}
-			}  
+					if (nextCheckCellCoordinate.y <= gameContext.board.Height__c) {
+						nextCheckCellCoordinate = this.getNextRow(nextCheckCellCoordinate); 
+					}
+					else if (nextCheckCellCoordinate.y == gameContext.board.Height__c){
+						return currentGamePlayerId;
+					}
+				}  
+			} 
 		}
 		
 		return null; 

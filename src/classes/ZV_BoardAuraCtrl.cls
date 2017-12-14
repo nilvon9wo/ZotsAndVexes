@@ -1,31 +1,23 @@
 public class ZV_BoardAuraCtrl {
-	F45_DML_GenericDml genericDml; 
-	ZV_BoardSelector boardSelector;
 	ZV_GamePlayerSelector gamePlayerSelector;
+	ZV_GameService gameService;
 	ZV_RecordTypeCache recordTypeCache;   
-	ZVG_GameLookup gameLookup;
-	 
+		  
 	public ZV_BoardAuraCtrl(
-			F45_DML_GenericDml genericDml,
-			ZV_BoardSelector boardSelector, 
 			ZV_GamePlayerSelector gamePlayerSelector,
-			ZV_RecordTypeCache recordTypeCache, 
-			ZVG_GameLookup gameLookup
+			ZV_GameService gameService, 
+			ZV_RecordTypeCache recordTypeCache 
 		) {
-		this.genericDml = genericDml;
-		this.boardSelector = boardSelector;
 		this.gamePlayerSelector = gamePlayerSelector;
+		this.gameService = gameService;
 		this.recordTypeCache = recordTypeCache;
-		this.gameLookup = gameLookup;
 	} 
 
 	public ZV_BoardAuraCtrl() {
 		this(
-			new F45_DML_GenericDml(), 
-			new ZV_BoardSelector(), 
 			new ZV_GamePlayerSelector(), 
-			new ZV_RecordTypeCache(), 
-			new ZVG_GameLookup()
+			new ZV_GameService(),
+			new ZV_RecordTypeCache()
 		);
 	}
 	
@@ -41,11 +33,7 @@ public class ZV_BoardAuraCtrl {
     	});
     	
     	ZV_GameContext gameContext = new ZV_GameContext(boardId);
-    	if (gameContext.game.Status__c == 'New') {
-    		this.gameLookup.getFor(gameContext.game).initializePlay(gameContext);
-			this.genericDml.doUpsert(gameContext.updatedCellList);    	  
-			this.genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});
-    	} 
+   		this.gameService.initializePlay(gameContext);
     	return gameContext.board;
     }
     

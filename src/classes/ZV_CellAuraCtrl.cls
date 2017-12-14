@@ -1,4 +1,4 @@
-public class ZV_CellAuraCtrl {
+public class ZV_CellAuraCtrl { 
 	ZV_CellService cellService;
 	ZV_GameService gameService;
 	ZV_RecordTypeCache recordTypeCache;   
@@ -20,7 +20,7 @@ public class ZV_CellAuraCtrl {
 			new ZV_RecordTypeCache()
 		);
 	}		
- 
+  
     @AuraEnabled
     public static ZV_CellOccupyResult occupyCell(Id cellId) {
     	return (new ZV_CellAuraCtrl()).occupy(cellId);

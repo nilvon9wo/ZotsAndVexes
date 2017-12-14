@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="updatedCell" type="ZV_Cell__c" /> 
+</aura:event>

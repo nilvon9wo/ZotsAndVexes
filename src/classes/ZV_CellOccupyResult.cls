@@ -1,7 +1,7 @@
 public class ZV_CellOccupyResult {
-    public List<ZV_Cell__c> updatedCellList {get; private set;}
-    public String gameStatus = 'In Progress';
-    public Id gameWinner;
+    @AuraEnabled public List<ZV_Cell__c> updatedCellList {get; private set;}
+    @AuraEnabled public String gameStatus = 'In Progress';
+    @AuraEnabled public Id gameWinner;
     
     public ZV_CellOccupyResult(List<ZV_Cell__c> updatedCellList, ZV_Game__c game) {
     	this.updatedCellList = updatedCellList;

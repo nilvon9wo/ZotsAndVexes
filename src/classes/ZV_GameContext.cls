@@ -79,7 +79,11 @@ public class ZV_GameContext {
     
     @testVisible public List<ZV_Cell__c> cellList {
     	get {
-    		return this.board.Cells__r;
+    		Map<Id, ZV_Cell__c> boardCellByIdMap = new Map<Id, ZV_Cell__c>(this.board.Cells__r);
+    		for (ZV_Cell__c cell : updatedCellList) {
+    			boardCellByIdMap.put(cell.Id, cell);
+    		}
+    		return boardCellByIdMap.values();
     	}
     	private set;
     }

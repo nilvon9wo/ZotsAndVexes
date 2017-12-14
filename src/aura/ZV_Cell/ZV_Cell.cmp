@@ -3,6 +3,10 @@
 	<aura:attribute access="public" name="boardId" type="Id"/>
 	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
 
+	<aura:registerEvent name="cellUpdateEvent" type="c:ZV_CellUpdateEvent"/>
+	
+	<aura:handler event="c:ZV_CellUpdateEvent" action="{!c.handleCellUpdateEvent}"/>
+
 	<ltng:require scripts="{!join(',',  
 								$Resource.AURA_LightningComponentHelper_JS
 							)}"

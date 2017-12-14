@@ -11,7 +11,9 @@ public class ZVR_RandomOpenCellStrategy implements ZVR_RobotPlayerIntf {
 	
 	public List<ZV_Cell__c> maneuver(ZV_GameContext gameContext) {
     	ZV_Cell__c randomCell = this.randomizer.getRandomMember(gameContext.unoccupiedCellSet);
-    	randomCell.Occupant__c = gameContext.currentGamePlayer.Id;
+    	if (randomCell != null) {
+    		randomCell.Occupant__c = gameContext.currentGamePlayer.Id;
+    	}
 		return new List<ZV_Cell__c>{randomCell}; 
 	}    
 }

@@ -15,6 +15,7 @@ public class ZVSC_StalemateConditionHelper {
     		Boolean hasStalemate = stalemateConditionInstance.checkForStalemate(gameContext);
     		  
 	    	if (hasStalemate) {
+	    		gameContext.game.Status__c = 'Stalemate';
 	    		return hasStalemate;
 	    	}
     	}

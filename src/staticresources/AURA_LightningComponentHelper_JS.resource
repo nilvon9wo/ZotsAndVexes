@@ -33,8 +33,15 @@ $LCH = (function(){
 		}); 
 	};
 
+	var WaitPromise = function(milliseconds) {
+		return new Promise(function(resolve) {
+			setTimeout(resolve, milliseconds);
+		});
+	};
+	
 	return {
-		ServerApexPromise: ServerApexPromise
+		ServerApexPromise: ServerApexPromise,
+		WaitPromise: WaitPromise
 	}
 }());
 
