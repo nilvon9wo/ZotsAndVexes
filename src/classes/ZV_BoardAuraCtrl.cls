@@ -23,10 +23,11 @@ public class ZV_BoardAuraCtrl {
 	
     @AuraEnabled
     public static ZV_Board__c getBoard (Id boardId) {
-    	return (new ZV_BoardAuraCtrl()).selectWithCells(boardId);
+    	return (new ZV_BoardAuraCtrl()).initializePlay(boardId);
     }
     
-    public ZV_Board__c selectWithCells (Id boardId) {
+    @testVisible
+    private ZV_Board__c initializePlay (Id boardId) {
     	this.recordTypeCache.registerRequired(new Set<SObjectType>{
     		ZV_Game__c.SObjectType,
     		ZV_Player__c.SObjectType 
@@ -42,7 +43,8 @@ public class ZV_BoardAuraCtrl {
     	return (new ZV_CellContainerAuraCtrl()).selectGamePlayers(gameId);
     } 
     
-    public List<ZV_GamePlayer__c> selectGamePlayers (Id gameId) {
+    @testVisible
+    private List<ZV_GamePlayer__c> selectGamePlayers (Id gameId) {
     	return this.gamePlayerSelector.selectByGameId(gameId); 
     } 
 }

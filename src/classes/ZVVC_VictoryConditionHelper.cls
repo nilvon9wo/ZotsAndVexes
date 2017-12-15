@@ -22,7 +22,7 @@ public class ZVVC_VictoryConditionHelper {
     		
 	    	if (gameContext.game.Winner__c != null) {
     	System.debug('##### ZVVC_VictoryConditionHelper WON!!!');
-	    		gameContext.game.Status__c = 'Won';
+	    		gameContext.game.Status__c = ZV_GameStatusHelper.GAME_WON;
 	    		return gameContext.game.Winner__c;
 	    	}
     	}

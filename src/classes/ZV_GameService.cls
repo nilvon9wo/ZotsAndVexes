@@ -1,19 +1,22 @@
 public class ZV_GameService {  
 	F45_DML_GenericDml genericDml;
 	ZV_GamePlayerService gamePlayerService; 
+	ZV_GameStatusHelper gameStatusHelper;
 	ZV_PlayerService playerService;
 	ZVG_GameLookup gameLookup;
 	ZVR_RobotPlayerHelper robotPlayerHelper;
  
 	public ZV_GameService(
 			F45_DML_GenericDml genericDml,
-			ZV_GamePlayerService gamePlayerService, 
+			ZV_GamePlayerService gamePlayerService,
+			ZV_GameStatusHelper gameStatusHelper, 
 			ZV_PlayerService playerService, 
 			ZVG_GameLookup gameLookup,
 			ZVR_RobotPlayerHelper robotPlayerHelper
 		) { 
 		this.genericDml = genericDml;
 		this.gamePlayerService = gamePlayerService;
+		this.gameStatusHelper = gameStatusHelper;
 		this.playerService = playerService;
 		this.gameLookup = gameLookup;
 		this.robotPlayerHelper = robotPlayerHelper;
@@ -23,13 +26,12 @@ public class ZV_GameService {
 		this(
 			new F45_DML_GenericDml(),  
 			new ZV_GamePlayerService(),
+			new ZV_GameStatusHelper(),
 			new ZV_PlayerService(),
 			new ZVG_GameLookup(),
 			new ZVR_RobotPlayerHelper()
 		);
 	}		
-	
-	private static String IN_PROGRESS = 'In Progress';
 	
     public ZV_CellOccupyResult reactToOccupiedCell(ZV_GameContext gameContext) {
     	if (this.isInProgress(gameContext)) {
@@ -50,9 +52,9 @@ public class ZV_GameService {
     }
 
 	public ZV_GameContext initializePlay (ZV_GameContext gameContext) {
-    	if (gameContext.game.Status__c == 'New') {
+    	if (this.gameStatusHelper.isNew(gameContext.game)) {
 			gameLookup.getFor(gameContext.game).initializePlay(gameContext);
-			gameContext.game.Status__c = IN_PROGRESS;
+			gameContext.game.Status__c = ZV_GameStatusHelper.IN_PROGRESS;
 			genericDml.doUpdate(gameContext.updatedCellList);
 			genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});
     	}
@@ -62,7 +64,7 @@ public class ZV_GameService {
     public Boolean isInProgress(ZV_GameContext gameContext) {
     	return noGameWinner(gameContext)
     		&& noStalemate(gameContext)
-    		&& gameContext.game.Status__c == IN_PROGRESS;
+    		&& this.gameStatusHelper.isInProgress(gameContext.game);
     }
     
     private Boolean noGameWinner(ZV_GameContext gameContext) {
@@ -72,6 +74,6 @@ public class ZV_GameService {
      
     private Boolean noStalemate(ZV_GameContext gameContext) {
     	this.gameLookup.getFor(gameContext.game).checkForStalemate(gameContext);
-    	return gameContext.game.Status__c != 'Stalemate';
+    	return !this.gameStatusHelper.isStalemate(gameContext.game);
     } 
 }

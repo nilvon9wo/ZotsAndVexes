@@ -1,12 +1,14 @@
 public class ZV_CellOccupyValidator {
+	ZV_GameStatusHelper gameStatusHelper;
 	ZVG_GameLookup gameLookup;
 	
-	public ZV_CellOccupyValidator(ZVG_GameLookup gameLookup) {
+	public ZV_CellOccupyValidator(ZV_GameStatusHelper gameStatusHelper, ZVG_GameLookup gameLookup) {
+		this.gameStatusHelper = gameStatusHelper;
 		this.gameLookup = gameLookup;
 	}
 
 	public ZV_CellOccupyValidator() { 
-		this(new ZVG_GameLookup());
+		this(new ZV_GameStatusHelper(), new ZVG_GameLookup());
 	}
 	
     public Boolean validate(ZV_GameContext gameContext) {
@@ -17,8 +19,11 @@ public class ZV_CellOccupyValidator {
     }
     
     public Boolean isGameInProgress(ZV_GameContext gameContext) {
-    	if (gameContext.game.Status__c != 'In Progress') { 
-    		throw new ZV_CellOccupyValidatorException('This game has a status of ' + gameContext.game.Status__c + ', not "In Progress".');
+    	if (!this.gameStatusHelper.isInProgress(gameContext.game)) { 
+    		throw new ZV_CellOccupyValidatorException(
+    			'This game has a status of ' + gameContext.game.Status__c + ', ' 
+    			+ 'not "' + ZV_GameStatusHelper.IN_PROGRESS + '".'
+    		);
     	}
     	return true;
     }
