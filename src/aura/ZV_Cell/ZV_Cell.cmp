@@ -3,8 +3,16 @@
 	<aura:attribute access="public" name="boardId" type="Id"/>
 	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
 
+	<aura:attribute access="private" name="isGameInProgress" type="Boolean" default="true"/>
+
+	<aura:registerEvent name="cellOccupyResultEvent" type="c:ZV_CellOccupyResultEvent"/>
+	<aura:handler event="c:ZV_CellOccupyResultEvent" action="{!c.handleCellOccupyResultEvent}"/>
+
+	<!--  
+		Even though ZV_CellOccupyResult contains all the cell updates, this is a separate event so we can time the display separately.
+		We may be able to change this once we start using platform events for opponent moves.
+	  -->
 	<aura:registerEvent name="cellUpdateEvent" type="c:ZV_CellUpdateEvent"/>
-	
 	<aura:handler event="c:ZV_CellUpdateEvent" action="{!c.handleCellUpdateEvent}"/>
 
 	<ltng:require scripts="{!join(',',  
@@ -17,7 +25,9 @@
 				<c:ZV_CellOccupant gamePlayerId="{!v.cell.Occupant__c}" gamePlayerByIdMap="{!v.gamePlayerByIdMap}" />
 				
 				<aura:set attribute="else">
-					<lightning:button label="Occupy" onclick="{!c.occupy}" />
+					<aura:if isTrue="{!v.isGameInProgress}" >
+						<lightning:button label="Occupy" onclick="{!c.occupy}" />
+					</aura:if>
 				</aura:set>
 			</aura:if>
 		</div>

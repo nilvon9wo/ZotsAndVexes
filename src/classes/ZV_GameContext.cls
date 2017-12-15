@@ -161,12 +161,12 @@ public class ZV_GameContext {
 		} 
 		private set;
 	}
-	
-    @testVisible public Map<Id, ZV_GamePlayer__c> gamePlayerByPlayerIdMap {
+	 
+	// NOTE: This is a map of SObject because of SFDC limitations.
+    @testVisible public Map<Id, SObject> gamePlayerByPlayerIdMap {
 		get {
 			if (this.gamePlayerByPlayerIdMap == null) {
-				this.gamePlayerByPlayerIdMap 
-					= (Map<Id, ZV_GamePlayer__c>) this.mapHelper.buidMapBySpecifiedId(this.gamePlayerList, ZV_GamePlayer__c.Player__c);
+				this.gamePlayerByPlayerIdMap = this.mapHelper.buidMapBySpecifiedId(this.gamePlayerList, ZV_GamePlayer__c.Player__c);
 			}
 			return this.gamePlayerByPlayerIdMap;
 		} 

@@ -9,7 +9,7 @@
 		var self = this;
 		return $A.getCallback(function(cellOccupyResult) {
 			self.updateCells(cellOccupyResult.updatedCellList);
-			self.stopGame(component, cellOccupyResult.gameStatus);
+			self.stopGame(component, cellOccupyResult);
 		});
 	},
 	
@@ -33,9 +33,13 @@
 		});
 	},
 
-	stopGame: function(component, gameStatus) {
-		if (gameStatus === 'In Progress') {
-			// TODO
+	stopGame: function(component, cellOccupyResult) {
+		var gameStatus = cellOccupyResult.gameStatus;
+		if (gameStatus != 'In Progress') {
+			var appEvent = $A.get('e.c:ZV_CellOccupyResultEvent');
+			appEvent.setParam('cellOccupyResult', cellOccupyResult);
+			appEvent.fire();
 		}
+		// TODO: Toast Victor!
 	}
 })

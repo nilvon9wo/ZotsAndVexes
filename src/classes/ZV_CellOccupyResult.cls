@@ -6,9 +6,10 @@ public class ZV_CellOccupyResult {
 
     	ZV_Game__c game = gameContext.game;
     	this.gameStatus = game.Status__c;
-    	this.gameWinner = this.gameStatusHelper.isWon(game)
-    		? gameContext.playerByIdMap.get(game.Winner__c).NickName__c
-    		: null;
+    	if (this.gameStatusHelper.isWon(game)) {
+    		this.winnerNickName = gameContext.playerByIdMap.get(game.Winner__c).NickName__c;
+    		this.winnerGamePlayerId = ((ZV_GamePlayer__c) gameContext.gamePlayerByPlayerIdMap.get(game.Winner__c)).Id;
+    	}
     	this.updatedCellList = gameContext.updatedCellList;
 	}
 
@@ -17,6 +18,7 @@ public class ZV_CellOccupyResult {
     } 
 
     @AuraEnabled public String gameStatus {get; private set;}
-    @AuraEnabled public String gameWinner {get; private set;}
+    @AuraEnabled public String winnerNickName {get; private set;}
+    @AuraEnabled public Id winnerGamePlayerId {get; private set;}
     @AuraEnabled public List<ZV_Cell__c> updatedCellList {get; private set;}
 }
