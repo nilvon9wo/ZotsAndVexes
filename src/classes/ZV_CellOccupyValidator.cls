@@ -10,9 +10,17 @@ public class ZV_CellOccupyValidator {
 	}
 	
     public Boolean validate(ZV_GameContext gameContext) {
-    	return this.isUserInGame(gameContext)
+    	return this.isGameInProgress(gameContext)
+    		&& this.isUserInGame(gameContext)
     		&& this.isUserNextPlayer(gameContext)
     		&& this.canUserOccupyCell(gameContext);
+    }
+    
+    public Boolean isGameInProgress(ZV_GameContext gameContext) {
+    	if (gameContext.game.Status__c != 'In Progress') { 
+    		throw new ZV_CellOccupyValidatorException('This game has a status of ' + gameContext.game.Status__c + ', not "In Progress".');
+    	}
+    	return true;
     }
     
     public Boolean isUserInGame(ZV_GameContext gameContext) {
