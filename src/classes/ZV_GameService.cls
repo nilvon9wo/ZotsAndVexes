@@ -46,7 +46,7 @@ public class ZV_GameService {
     	} 
 		this.genericDml.doUpdate(gameContext.updatedCellList);    	  
 		this.genericDml.doUpdate(new List<ZV_Game__c>{gameContext.game});
-		return new ZV_CellOccupyResult(gameContext.updatedCellList, gameContext.game); 
+		return new ZV_CellOccupyResult(gameContext); 
     }
 
 	public ZV_GameContext initializePlay (ZV_GameContext gameContext) {
