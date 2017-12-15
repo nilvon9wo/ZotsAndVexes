@@ -39,7 +39,7 @@
 	
 	createCellContainer: function(component, board, gamePlayerByIdMap) {
 		var params = {
-			gameId: board.Game__c,
+			game: board.Game__r,
 			gamePlayerByIdMap: gamePlayerByIdMap,
 			cellRowList: this.buildCellMatrix(board)
 		};

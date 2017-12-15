@@ -1,12 +1,12 @@
 <aura:component controller="ZV_CellContainerAuraCtrl"> 
 	<aura:attribute access="public" name="cellRowList" type="List"/>
-	<aura:attribute access="public" name="gameId" type="Id"/>
+	<aura:attribute access="public" name="game" type="ZV_Game__c"/>
 	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
 
 	<aura:iteration items="{!v.cellRowList}" var="cellRow" >
 		<tr>	
-			<aura:iteration items="{!cellRow}" var="cell" >
-				<td><c:ZV_Cell cell="{!cell}" gamePlayerByIdMap="{!v.gamePlayerByIdMap}"/></td>
+			<aura:iteration items="{!cellRow}" var="cell" > 
+				<td><c:ZV_Cell cell="{!cell}" game="{!v.game}" gamePlayerByIdMap="{!v.gamePlayerByIdMap}"/></td>
 			</aura:iteration>
 		</tr>
 	</aura:iteration>

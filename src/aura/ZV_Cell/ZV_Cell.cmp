@@ -1,9 +1,12 @@
 <aura:component controller="ZV_CellAuraCtrl"> 
-	<aura:attribute access="public" name="cell" type="ZV_Cell__c"/>
 	<aura:attribute access="public" name="boardId" type="Id"/>
+	<aura:attribute access="public" name="cell" type="ZV_Cell__c"/>
+	<aura:attribute access="public" name="game" type="ZV_Game__c"/>
 	<aura:attribute access="public" name="gamePlayerByIdMap" type="Map"/>
 
 	<aura:attribute access="private" name="isGameInProgress" type="Boolean" default="true"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
 	<aura:registerEvent name="cellOccupyResultEvent" type="c:ZV_CellOccupyResultEvent"/>
 	<aura:handler event="c:ZV_CellOccupyResultEvent" action="{!c.handleCellOccupyResultEvent}"/>

@@ -1,4 +1,9 @@
 ({
+	doInit : function(component, event, helper) {
+		var gameStatus = component.get('v.game').Status__c;
+		component.set('v.isGameInProgress', gameStatus === 'In Progress');
+	},
+	
 	occupy : function(component, event, helper) {
 		helper.occupy(component)
 			.then($A.getCallback(helper.updateBoard(component)));
