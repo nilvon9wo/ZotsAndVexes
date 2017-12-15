@@ -1,7 +1,8 @@
 ({
 	doInit : function(component, event, helper) {
 		var gameStatus = component.get('v.game').Status__c;
-		component.set('v.isGameInProgress', gameStatus === 'In Progress');
+		var inProgress = gameStatus == 'In Progress' || gameStatus == 'New';
+		component.set('v.isGameInProgress', inProgress);
 	},
 	
 	occupy : function(component, event, helper) {

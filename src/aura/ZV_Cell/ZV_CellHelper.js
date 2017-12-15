@@ -40,6 +40,25 @@
 			appEvent.setParam('cellOccupyResult', cellOccupyResult);
 			appEvent.fire();
 		}
-		// TODO: Toast Victor!
+		if (gameStatus === 'Won') {
+			this.showToast({
+		        type: 'success',
+		        title: 'Won!',
+		        message: cellOccupyResult.winnerNickName + ' has won the game!'
+		    })
+		}
+		if (gameStatus === 'Stalemate') {
+			this.showToast({
+		        title: 'Stalemate',
+		        type: 'info',
+		        message: 'The game has ended in a stalemate.'
+		    });
+		}
+	},
+	
+	showToast: function(params) {
+		var toastEvent = $A.get('e.force:showToast');
+	    toastEvent.setParams(params);
+	    toastEvent.fire();
 	}
 })
